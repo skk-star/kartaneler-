@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sierpinski Halısı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            margin: 15px 0 5px;
+            text-align: center;
+            background: linear-gradient(135deg, #00d4ff 0%, #00ffff 50%, #00ff88 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            font-weight: 900;
+            letter-spacing: 3px;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(0, 255, 255, 0.6)); }
+            50% { filter: brightness(1.4) drop-shadow(0 0 40px rgba(0, 255, 255, 0.9)); }
+        }
+        
+        .info {
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            opacity: 0.95;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 0 15px;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        
+        #canvas {
+            background: radial-gradient(ellipse at center, rgba(15, 32, 39, 0.9) 0%, rgba(0, 0, 0, 0.98) 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.8),
+                0 0 80px rgba(0, 212, 255, 0.4),
+                inset 0 0 50px rgba(0, 255, 255, 0.1);
+            margin: 15px 0;
+            max-width: 100%;
+            height: auto;
+            touch-action: none;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 550px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 255, 255, 0.15) 100%);
+            padding: 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.5),
+                0 0 40px rgba(0, 212, 255, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        label {
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            letter-spacing: 0.5px;
+        }
+        
+        .value {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.4) 0%, rgba(0, 255, 255, 0.4) 100%);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            min-width: 45px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.5);
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), rgba(0, 255, 255, 0.3));
+            border-radius: 10px;
+            outline: none;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff 0%, #00ffff 100%);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.9), 0 4px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 1);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff 0%, #00ffff 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.9), 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        .color-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        
+        .color-btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            color: white;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            padding: 12px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+        
+        .color-btn.active {
+            border-color: #00ffff;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.5) 0%, rgba(0, 255, 255, 0.5) 100%);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), 0 5px 15px rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .color-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 130px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            border: 2px solid rgba(0, 212, 255, 0.5);
+            padding: 16px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: clamp(1rem, 3.5vw, 1.15rem);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+            touch-action: manipulation;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 3px 15px rgba(0, 212, 255, 0.7);
+        }
+        
+        @media (hover: hover) {
+            button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(0, 212, 255, 0.8);
+                background: linear-gradient(135deg, #00e5ff 0%, #00b3cc 100%);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            
+            .controls {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            button {
+                min-width: 110px;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>🟦 SİERPİNSKİ HALISI</h1>
+        <div class="info">Her seviyede ortadaki kareler boşalır ve karmaşık desen oluşur</div>
+        
+        <canvas id="canvas"></canvas>
+        
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-row">
+                    <label for="level">Seviye</label>
+                    <span class="value" id="levelValue">4</span>
+                </div>
+                <input type="range" id="level" min="0" max="6" value="4">
+            </div>
+            
+            <div class="control-group">
+                <div class="control-row">
+                    <label for="speed">Hız</label>
+                    <span class="value" id="speedValue">25</span>
+                </div>
+                <input type="range" id="speed" min="5" max="100" value="25">
+            </div>
+            
+            <div class="control-group">
+                <label>Renk Teması</label>
+                <div class="color-buttons">
+                    <button class="color-btn active" data-color="cyber">💎 Cyber</button>
+                    <button class="color-btn" data-color="sunset">🌅 Günbatımı</button>
+                    <button class="color-btn" data-color="emerald">💚 Zümrüt</button>
+                    <button class="color-btn" data-color="plasma">⚡ Plazma</button>
+                    <button class="color-btn" data-color="gold">✨ Altın</button>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button id="playPause">⏸️ Duraklat</button>
+                <button id="reset">🔄 Sıfırla</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let level = 4;
+        let speed = 25;
+        let squares = [];
+        let currentSquare = 0;
+        let isPlaying = true;
+        let animationId;
+        let currentColor = 'cyber';
+        
+        const colorSchemes = {
+            cyber: ['#00d4ff', '#00ffff', '#0099ff', '#00ffaa', '#00ccff'],
+            sunset: ['#ff6b6b', '#ff8e53', '#ffbb33', '#ffd93d', '#ff6b9d'],
+            emerald: ['#00c9a7', '#00e5cc', '#00ffd5', '#84fab0', '#8fd3f4'],
+            plasma: ['#8e2de2', '#4a00e0', '#da22ff', '#9733ee', '#c471ed'],
+            gold: ['#ffd700', '#ffed4e', '#ffe66d', '#ffc400', '#ffb700']
+        };
+        
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth - 20, 650);
+            canvas.width = size;
+            canvas.height = size;
+            generateCarpet();
+            draw();
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+
+        const levelSlider = document.getElementById('level');
+        const speedSlider = document.getElementById('speed');
+        const playPauseBtn = document.getElementById('playPause');
+        const resetBtn = document.getElementById('reset');
+        const levelValue = document.getElementById('levelValue');
+        const speedValue = document.getElementById('speedValue');
+
+        function sierpinskiCarpet(x, y, size, depth, colorIndex) {
+            if (depth === 0) {
+                return [[x, y, size, colorIndex]];
+            }
+
+            const newSize = size / 3;
+            let rects = [];
+            
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (i === 1 && j === 1) {
+                        continue;
+                    }
+                    const newX = x + i * newSize;
+                    const newY = y + j * newSize;
+                    rects = rects.concat(
+                        sierpinskiCarpet(
+                            newX, newY, newSize, depth - 1, 
+                            (colorIndex + i + j) % colorSchemes[currentColor].length
+                        )
+                    );
+                }
+            }
+            
+            return rects;
+        }
+
+        function generateCarpet() {
+            const padding = 30;
+            const size = canvas.width - padding * 2;
+            squares = sierpinskiCarpet(padding, padding, size, level, 0);
+            currentSquare = 0;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.98)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const colors = colorSchemes[currentColor];
+            
+            for (let i = 0; i < currentSquare && i < squares.length; i++) {
+                const [x, y, size, colorIndex] = squares[i];
+                
+                const gradient = ctx.createRadialGradient(
+                    x + size / 2, y + size / 2, 0,
+                    x + size / 2, y + size / 2, size
+                );
+                
+                gradient.addColorStop(0, colors[colorIndex]);
+                gradient.addColorStop(1, colors[(colorIndex + 1) % colors.length]);
+                
+                ctx.fillStyle = gradient;
+                ctx.strokeStyle = colors[colorIndex];
+                ctx.lineWidth = Math.max(0.5, size / 50);
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = colors[colorIndex];
+                
+                ctx.fillRect(x, y, size, size);
+                ctx.strokeRect(x, y, size, size);
+            }
+        }
+
+        function animate() {
+            if (isPlaying && currentSquare < squares.length) {
+                const step = Math.max(1, Math.floor(speed / 5));
+                currentSquare = Math.min(currentSquare + step, squares.length);
+                draw();
+            }
+            
+            if (currentSquare >= squares.length) {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️ Başlat';
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        levelSlider.addEventListener('input', (e) => {
+            level = parseInt(e.target.value);
+            levelValue.textContent = level;
+            generateCarpet();
+            draw();
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            speed = parseInt(e.target.value);
+            speedValue.textContent = speed;
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? '⏸️ Duraklat' : '▶️ Başlat';
+            
+            if (currentSquare >= squares.length) {
+                currentSquare = 0;
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            currentSquare = 0;
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸️ Duraklat';
+            draw();
+        });
+        
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentColor = btn.dataset.color;
+                draw();
+            });
+        });
+
+        resizeCanvas();
+        animate();
+    </script>
+</body>
+</html>
