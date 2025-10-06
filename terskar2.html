@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ters Koch Kar Tanesi Animasyonu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #2c003e 0%, #1a0033 50%, #0d001a 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            margin: 10px 0;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .info {
+            font-size: clamp(0.75rem, 3vw, 0.9rem);
+            opacity: 0.9;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+        
+        #canvas {
+            background: radial-gradient(circle at center, #1a0033 0%, #000000 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7),
+                        0 0 50px rgba(250,112,154,0.3);
+            margin: 10px 0;
+            max-width: 100%;
+            height: auto;
+            touch-action: none;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        label {
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .value {
+            background: rgba(250,112,154,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(250,112,154,0.8);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(250,112,154,0.8);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .color-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .color-btn {
+            flex: 1;
+            min-width: 90px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid transparent;
+            padding: 10px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+        
+        .color-btn.active {
+            border-color: #fa709a;
+            background: rgba(250,112,154,0.3);
+            box-shadow: 0 0 15px rgba(250,112,154,0.5);
+        }
+        
+        .color-btn:active {
+            transform: scale(0.95);
+        }
+        
+        button {
+            flex: 1;
+            min-width: 120px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #1a0033;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+            touch-action: manipulation;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(250, 112, 154, 0.6);
+        }
+        
+        @media (hover: hover) {
+            button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+            }
+            
+            .controls {
+                padding: 12px;
+                gap: 12px;
+            }
+            
+            button {
+                min-width: 100px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>⭐ Ters Koch Kar Tanesi Fraktalı</h1>
+    <div class="info">İçe doğru çıkıntılar yapan kar tanesi</div>
+    
+    <canvas id="canvas"></canvas>
+    
+    <div class="controls">
+        <div class="control-group">
+            <div class="control-row">
+                <label for="level">Seviye</label>
+                <span class="value" id="levelValue">3</span>
+            </div>
+            <input type="range" id="level" min="0" max="6" value="3">
+        </div>
+        
+        <div class="control-group">
+            <div class="control-row">
+                <label for="speed">Hız</label>
+                <span class="value" id="speedValue">20</span>
+            </div>
+            <input type="range" id="speed" min="5" max="100" value="20">
+        </div>
+        
+        <div class="control-group">
+            <label>Renk Teması</label>
+            <div class="color-buttons">
+                <button class="color-btn active" data-color="pink">🌸 Pembe</button>
+                <button class="color-btn" data-color="blue">❄️ Mavi</button>
+                <button class="color-btn" data-color="green">🌿 Yeşil</button>
+                <button class="color-btn" data-color="purple">💜 Mor</button>
+                <button class="color-btn" data-color="rainbow">🌈 Gökkuşağı</button>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="playPause">⏸️ Duraklat</button>
+            <button id="reset">🔄 Sıfırla</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let level = 3;
+        let speed = 20;
+        let segments = [];
+        let currentSegment = 0;
+        let isPlaying = true;
+        let animationId;
+        let currentColor = 'pink';
+        
+        const colorSchemes = {
+            pink: {
+                start: '#fa709a',
+                mid: '#ff6b9d',
+                end: '#fee140',
+                shadow: '#fa709a'
+            },
+            blue: {
+                start: '#a8edea',
+                mid: '#87ceeb',
+                end: '#fed6e3',
+                shadow: '#a8edea'
+            },
+            green: {
+                start: '#56ab2f',
+                mid: '#a8e063',
+                end: '#d4fc79',
+                shadow: '#56ab2f'
+            },
+            purple: {
+                start: '#667eea',
+                mid: '#764ba2',
+                end: '#f093fb',
+                shadow: '#667eea'
+            },
+            rainbow: {
+                start: '#ff0080',
+                mid: '#00ff80',
+                end: '#8000ff',
+                shadow: '#ff0080'
+            }
+        };
+        
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth - 20, 600);
+            canvas.width = size;
+            canvas.height = size;
+            generateSnowflake();
+            draw();
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+
+        const levelSlider = document.getElementById('level');
+        const speedSlider = document.getElementById('speed');
+        const playPauseBtn = document.getElementById('playPause');
+        const resetBtn = document.getElementById('reset');
+        const levelValue = document.getElementById('levelValue');
+        const speedValue = document.getElementById('speedValue');
+
+        function kochSegment(x1, y1, x2, y2, depth) {
+            if (depth === 0) {
+                return [[x1, y1, x2, y2]];
+            }
+
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            
+            const px1 = x1 + dx / 3;
+            const py1 = y1 + dy / 3;
+            
+            const px2 = x1 + 2 * dx / 3;
+            const py2 = y1 + 2 * dy / 3;
+            
+            const angle = Math.PI / 3;
+            const px = px1 + (px2 - px1) * Math.cos(angle) - (py2 - py1) * Math.sin(angle);
+            const py = py1 + (px2 - px1) * Math.sin(angle) + (py2 - py1) * Math.cos(angle);
+
+            let segs = [];
+            segs = segs.concat(kochSegment(x1, y1, px1, py1, depth - 1));
+            segs = segs.concat(kochSegment(px1, py1, px, py, depth - 1));
+            segs = segs.concat(kochSegment(px, py, px2, py2, depth - 1));
+            segs = segs.concat(kochSegment(px2, py2, x2, y2, depth - 1));
+            
+            return segs;
+        }
+
+        function generateSnowflake() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(canvas.width, canvas.height) * 0.35;
+            
+            const angle = -Math.PI / 2;
+            const x1 = centerX + radius * Math.cos(angle);
+            const y1 = centerY + radius * Math.sin(angle);
+            const x2 = centerX + radius * Math.cos(angle + 2 * Math.PI / 3);
+            const y2 = centerY + radius * Math.sin(angle + 2 * Math.PI / 3);
+            const x3 = centerX + radius * Math.cos(angle + 4 * Math.PI / 3);
+            const y3 = centerY + radius * Math.sin(angle + 4 * Math.PI / 3);
+
+            segments = [];
+            segments = segments.concat(kochSegment(x1, y1, x2, y2, level));
+            segments = segments.concat(kochSegment(x2, y2, x3, y3, level));
+            segments = segments.concat(kochSegment(x3, y3, x1, y1, level));
+            
+            currentSegment = 0;
+        }
+
+        function draw() {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            if (currentSegment === 0) return;
+            
+            const colors = colorSchemes[currentColor];
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, colors.start);
+            gradient.addColorStop(0.5, colors.mid);
+            gradient.addColorStop(1, colors.end);
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = Math.max(1, canvas.width / 400);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = colors.shadow;
+            
+            ctx.beginPath();
+            
+            for (let i = 0; i < currentSegment; i++) {
+                const [x1, y1, x2, y2] = segments[i];
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+            }
+            
+            ctx.stroke();
+            
+            if (currentSegment > 0) {
+                const [, , x2, y2] = segments[currentSegment - 1];
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x2, y2, Math.max(3, canvas.width / 200), 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            if (isPlaying && currentSegment < segments.length) {
+                const step = Math.max(1, Math.floor(speed / 10));
+                currentSegment = Math.min(currentSegment + step, segments.length);
+                draw();
+            }
+            
+            if (currentSegment >= segments.length) {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️ Başlat';
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        levelSlider.addEventListener('input', (e) => {
+            level = parseInt(e.target.value);
+            levelValue.textContent = level;
+            generateSnowflake();
+            draw();
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            speed = parseInt(e.target.value);
+            speedValue.textContent = speed;
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? '⏸️ Duraklat' : '▶️ Başlat';
+            
+            if (currentSegment >= segments.length) {
+                currentSegment = 0;
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            currentSegment = 0;
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸️ Duraklat';
+            draw();
+        });
+        
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentColor = btn.dataset.color;
+                draw();
+            });
+        });
+
+        resizeCanvas();
+        animate();
+    </script>
+</body>
+</html>
