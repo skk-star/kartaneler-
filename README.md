@@ -1,0 +1,2 @@
+# kartaneler-
+kar tanelerıyle alakalı
