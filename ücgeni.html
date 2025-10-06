@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sierpinski Üçgeni</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #330066 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            margin: 15px 0 5px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 50%, #ffff00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            font-weight: 900;
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(255, 0, 255, 0.6)); }
+            50% { filter: brightness(1.3) drop-shadow(0 0 40px rgba(0, 255, 255, 0.8)); }
+        }
+        
+        .info {
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            opacity: 0.95;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 0 15px;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        
+        #canvas {
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.8),
+                0 0 80px rgba(138, 43, 226, 0.4),
+                inset 0 0 50px rgba(75, 0, 130, 0.2);
+            margin: 15px 0;
+            max-width: 100%;
+            height: auto;
+            touch-action: none;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 550px;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.2) 100%);
+            padding: 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.5),
+                0 0 40px rgba(138, 43, 226, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        label {
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            letter-spacing: 0.5px;
+        }
+        
+        .value {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.4) 0%, rgba(75, 0, 130, 0.4) 100%);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            min-width: 45px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.3));
+            border-radius: 10px;
+            outline: none;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 4px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 1);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 4px 10px rgba(0,0,0,0.5);
+        }
+        
+        .color-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        
+        .color-btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            color: white;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            padding: 12px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+        
+        .color-btn.active {
+            border-color: #ff00ff;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.5) 0%, rgba(75, 0, 130, 0.5) 100%);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 5px 15px rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .color-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 130px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+            color: white;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            padding: 16px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: clamp(1rem, 3.5vw, 1.15rem);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+            touch-action: manipulation;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 3px 15px rgba(138, 43, 226, 0.7);
+        }
+        
+        @media (hover: hover) {
+            button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(138, 43, 226, 0.8);
+                background: linear-gradient(135deg, #9d4edd 0%, #5a189a 100%);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            
+            .controls {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            button {
+                min-width: 110px;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>🔺 SİERPİNSKİ ÜÇGEN</h1>
+        <div class="info">Her seviyede üçgen daha karmaşık bir yapıya dönüşür</div>
+        
+        <canvas id="canvas"></canvas>
+        
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-row">
+                    <label for="level">Seviye</label>
+                    <span class="value" id="levelValue">5</span>
+                </div>
+                <input type="range" id="level" min="0" max="8" value="5">
+            </div>
+            
+            <div class="control-group">
+                <div class="control-row">
+                    <label for="speed">Hız</label>
+                    <span class="value" id="speedValue">30</span>
+                </div>
+                <input type="range" id="speed" min="5" max="100" value="30">
+            </div>
+            
+            <div class="control-group">
+                <label>Renk Teması</label>
+                <div class="color-buttons">
+                    <button class="color-btn active" data-color="neon">⚡ Neon</button>
+                    <button class="color-btn" data-color="fire">🔥 Ateş</button>
+                    <button class="color-btn" data-color="ocean">🌊 Okyanus</button>
+                    <button class="color-btn" data-color="galaxy">🌌 Galaksi</button>
+                    <button class="color-btn" data-color="rainbow">🌈 Gökkuşağı</button>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button id="playPause">⏸️ Duraklat</button>
+                <button id="reset">🔄 Sıfırla</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let level = 5;
+        let speed = 30;
+        let triangles = [];
+        let currentTriangle = 0;
+        let isPlaying = true;
+        let animationId;
+        let currentColor = 'neon';
+        
+        const colorSchemes = {
+            neon: ['#ff00ff', '#00ffff', '#ffff00', '#ff00aa', '#00ffaa'],
+            fire: ['#ff0000', '#ff6600', '#ffaa00', '#ffdd00', '#ffff00'],
+            ocean: ['#006994', '#0099cc', '#00ccff', '#66ffff', '#99ffff'],
+            galaxy: ['#4b0082', '#8a2be2', '#9370db', '#ba55d3', '#da70d6'],
+            rainbow: ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3']
+        };
+        
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth - 20, 650);
+            canvas.width = size;
+            canvas.height = size * 0.87;
+            generateTriangles();
+            draw();
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+
+        const levelSlider = document.getElementById('level');
+        const speedSlider = document.getElementById('speed');
+        const playPauseBtn = document.getElementById('playPause');
+        const resetBtn = document.getElementById('reset');
+        const levelValue = document.getElementById('levelValue');
+        const speedValue = document.getElementById('speedValue');
+
+        function sierpinskiTriangle(x1, y1, x2, y2, x3, y3, depth, colorIndex) {
+            if (depth === 0) {
+                return [[x1, y1, x2, y2, x3, y3, colorIndex]];
+            }
+
+            const mx1 = (x1 + x2) / 2;
+            const my1 = (y1 + y2) / 2;
+            const mx2 = (x2 + x3) / 2;
+            const my2 = (y2 + y3) / 2;
+            const mx3 = (x3 + x1) / 2;
+            const my3 = (y3 + y1) / 2;
+
+            let tris = [];
+            tris = tris.concat(sierpinskiTriangle(x1, y1, mx1, my1, mx3, my3, depth - 1, colorIndex % colorSchemes[currentColor].length));
+            tris = tris.concat(sierpinskiTriangle(mx1, my1, x2, y2, mx2, my2, depth - 1, (colorIndex + 1) % colorSchemes[currentColor].length));
+            tris = tris.concat(sierpinskiTriangle(mx3, my3, mx2, my2, x3, y3, depth - 1, (colorIndex + 2) % colorSchemes[currentColor].length));
+            
+            return tris;
+        }
+
+        function generateTriangles() {
+            const padding = 40;
+            const width = canvas.width - padding * 2;
+            const height = width * Math.sin(Math.PI / 3);
+            
+            const x1 = canvas.width / 2;
+            const y1 = padding;
+            const x2 = padding;
+            const y2 = padding + height;
+            const x3 = canvas.width - padding;
+            const y3 = padding + height;
+
+            triangles = sierpinskiTriangle(x1, y1, x2, y2, x3, y3, level, 0);
+            currentTriangle = 0;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.95)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const colors = colorSchemes[currentColor];
+            
+            for (let i = 0; i < currentTriangle && i < triangles.length; i++) {
+                const [x1, y1, x2, y2, x3, y3, colorIndex] = triangles[i];
+                
+                const gradient = ctx.createRadialGradient(
+                    (x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, 0,
+                    (x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, 100
+                );
+                
+                gradient.addColorStop(0, colors[colorIndex]);
+                gradient.addColorStop(1, colors[(colorIndex + 1) % colors.length]);
+                
+                ctx.fillStyle = gradient;
+                ctx.strokeStyle = colors[colorIndex];
+                ctx.lineWidth = 1.5;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = colors[colorIndex];
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineTo(x3, y3);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+
+        function animate() {
+            if (isPlaying && currentTriangle < triangles.length) {
+                const step = Math.max(1, Math.floor(speed / 5));
+                currentTriangle = Math.min(currentTriangle + step, triangles.length);
+                draw();
+            }
+            
+            if (currentTriangle >= triangles.length) {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️ Başlat';
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        levelSlider.addEventListener('input', (e) => {
+            level = parseInt(e.target.value);
+            levelValue.textContent = level;
+            generateTriangles();
+            draw();
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            speed = parseInt(e.target.value);
+            speedValue.textContent = speed;
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? '⏸️ Duraklat' : '▶️ Başlat';
+            
+            if (currentTriangle >= triangles.length) {
+                currentTriangle = 0;
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            currentTriangle = 0;
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸️ Duraklat';
+            draw();
+        });
+        
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentColor = btn.dataset.color;
+                draw();
+            });
+        });
+
+        resizeCanvas();
+        animate();
+    </script>
+</body>
+</html>
