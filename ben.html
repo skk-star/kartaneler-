@@ -128,6 +128,9 @@
             text-align: center;
             letter-spacing: 1.5px;
         }
+        h1 :hover{
+
+        }
 
         hr {
             width: 70%;
@@ -141,11 +144,12 @@
         /* --- TANITIM KISMI --- */
         .tanitim {
             /* Tanıtım kutusu daha mat ve belirgin kalsın */
-            background-color: rgba(42, 42, 74, 0.95); /* Yarı saydamlık ekleyerek arka planı hafif göster */
+            background: linear-gradient(-45deg ,rgb(46, 77, 5),rgb(111, 160, 250)); /* Yarı saydamlık ekleyerek arka planı hafif göster */
             width: 80%;
             max-width: 700px;
             padding: 30px;
-            border-radius: 15px;
+            border-top-left-radius: 50px;
+            border-bottom-right-radius: 50px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
             text-align: center;
             border: 1px solid #3a3a5a;
@@ -153,7 +157,8 @@
         }
 
         .tanitim:hover {
-            transform: translateY(-5px); /* Hafif yukarı hareket */
+            transform: translateY(-10px); /* Hafif yukarı hareket */
+            background: linear-gradient(135deg,rgb(226, 199, 199),rgb(15, 15, 80));
         }
 
         /* --- PROFİL FOTOĞRAFI --- */
@@ -171,29 +176,39 @@
         .profil-foto:hover {
             transform: scale(1.05); /* Hoverda hafif büyüme */
         }
+        /*yıldızlar*/
+        #yıldızlar{
+            color:  red;
+        }
 
         /* --- İSİM VE ÜNVAN --- */
         .isim {
             font-family: 'Montserrat', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: #e0e0e0;
+            color: #3e255e;
             margin-bottom: 5px;
+            transition: transform 0.3s ease;
+        }
+        .isim:hover {
+            transform: scale(1.2); /* Büyütme (ÇALIŞIR) */
+            color: #64ffda; /* Bonus: Büyürken rengini de vurgu rengi yapabiliriz. */
+            cursor: pointer; /* Bonus: Kullanıcıya tıklanabilir/etkileşimli olduğunu belirtmek için */
         }
 
         .unvan {
             font-family: 'Roboto', sans-serif; /* Unvan için farklı bir font */
             font-size: 18px;
-            color: #a0a0a0;
+            color: #21e2c2;
             margin-bottom: 25px;
         }
 
         /* --- HAKKIMDA METNİ --- */
         .tanitim p {
             font-family: 'Roboto', sans-serif;
-            font-size: 17px;
+            font-size: 27px;
             line-height: 1.8;
-            color: #c0c0c0;
+            color: #e9f893;
             margin-top: 25px; /* Hakkımda metninden önce biraz boşluk */
         }
 
@@ -206,14 +221,17 @@
         }
 
         .sosyal-medya a {
-            color: #a0a0a0;
+            background: linear-gradient(-45deg,rgb(248, 243, 243),rgb(120, 120, 230));
+            color: #101950;
             font-size: 36px; /* İkon boyutunu büyüt */
             transition: color 0.3s ease, transform 0.3s ease;
             text-decoration: none; /* Alt çizgiyi kaldır */
+            border-top-left-radius: 5px;
+            border-bottom-right-radius: 10px;
         }
 
         .sosyal-medya a:hover {
-            color: #64ffda; /* Vurgu rengi */
+            color: #1e43bd; /* Vurgu rengi */
             transform: translateY(-5px) scale(1.1); /* Hafif yukarı ve büyütme */
         }
 
@@ -230,7 +248,7 @@
             }
 
             h1 {
-                font-size: 30px;
+                font-size: 50px;
             }
 
             .tanitim {
@@ -246,8 +264,13 @@
 
             .isim {
                 font-size: 24px;
+                text-decoration:underline; 
             }
-
+            .isim:hover {
+                transform: scale(1.05); /* Büyütme (ÇALIŞIR) */
+                color: #64ffda; /* Bonus: Büyürken rengini de vurgu rengi yapabiliriz. */
+                cursor: pointer; /* Bonus: Kullanıcıya tıklanabilir/etkileşimli olduğunu belirtmek için */
+            }
             .unvan {
                 font-size: 16px;
             }
@@ -266,7 +289,7 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 380px) {
             h1 {
                 font-size: 24px;
             }
@@ -300,7 +323,7 @@
         <a href="#" class="sidebar-logo">AB</a> <nav class="sidebar-nav">
             <a href="#hakkımda" aria-label="Hakkımda"><i class="fas fa-user"></i></a>
             <a href="#projeler" aria-label="Projeler"><i class="fas fa-code"></i></a>
-            <a href="#iletisim" aria-label="İletişim"><i class="fas fa-envelope"></i></a>
+            <a href="#İletişim" aria-label="İletişim"><i class="fas fa-envelope"></i></a>
         </nav>
         <div class="sidebar-bottom-nav">
             </div>
@@ -313,17 +336,30 @@
         <div class="tanitim">
             <img src="ögrenci.jpg" alt="Profil Fotoğrafı" class="profil-foto">
 
-            <div class="isim">Abdulbaki Baynaz</div>
-            <div class="unvan">Yazılım Geliştirici | Siber Güvenlik Meraklısı</div>
+            <div class="isim">ABDÜLBAKİ BAYNAZ</div>
+            <div class="unvan">YAZILIMCI |VERİBİLİMCİ |MATEMATİKÇİ</div>
 
-            <hr>
+            <p id="yıldızlar">**********************************************</p>
 
             <div id="hakkımda">
-                <p>Yazılım dünyasına tutkuyla bağlıyım. Web geliştirme (Frontend & Backend), siber güvenlik ve yapay zeka konularında kendimi sürekli geliştiriyorum.
-                Yeni teknolojileri öğrenmek ve üretmek benim için bir yaşam tarzı.</p>
+                <p>🎯
+                "Hem derinlemesine Matematik bilgisine sahip bir eğitimci, hem de yetkin bir Yazılım Geliştirici olarak çift yönlü uzmanlık sunuyorum.</p>
+
+                <p>Matematik alanında, Ortaokuldan Üniversiteye kadar her seviyede (Cebir, Analiz, Geometri vb.) kişiselleştirilmiş özel dersler ve akademik destek sağlıyorum.</p>
+
+                <p>Yazılım ve Teknoloji alanında ise, sadece eğitim vermekle kalmıyor, aynı zamanda projeler geliştiriyorum:</p>
+                <ul class="yaptıklarım" >
+                    <li>Web Geliştirme (Full-Stack)</li>
+                    <li>Mobil Uygulama Geliştirme (Android/kotlin)</li>
+                    <li>Veri Bilimi ve Analizi(PYTHON DEVELOPER)</li>
+
+                </ul>
+
+
+                <p id="son">Gerek birebir eğitimlerde gerekse somut projelerde size destek olmaya hazırım. Matematiksel düşünce yapısını kodlama becerisiyle birleştirerek, hedeflerinize ulaşmanız için en güçlü temeli atmanıza yardımcı olabilirim." </p>
             </div>
 
-            <div class="sosyal-medya">
+            <div id="İletişim" class="sosyal-medya">
                 <a href="https://github.com/ssk-star" target="_blank" aria-label="GitHub" title="GİTHUB HESABIM"><i class="fa-brands fa-github"></i></a>
                 <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn" title="LİNKEDINIM"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="https://instagram.com/abdulbakibaynaz" target="_blank" aria-label="Instagram" title="İNSTAGRAMIM"><i class="fa-brands fa-instagram"></i></a>
