@@ -38,7 +38,7 @@
             overflow-x: hidden;
 
             /* 2. ARKA PLAN DEĞİŞİKLİKLERİ */
-            background: linear-gradient(-45deg, #1a1a2e, #2a0a2e, #0a2e2e, #1a1a2e); 
+            background: linear-gradient(-45deg, #b5b5f3, #2a0a2e, #1e5757, #1a2d2e); 
             /* 4 Farklı Renk: Koyu Lacivert, Koyu Mor, Koyu Camgöbeği, Koyu Lacivert */
             background-size: 400% 400%; /* Geçiş efektini büyüt */
             animation: color-shift 20s ease infinite; /* 20 saniyede sonsuz döngüde animasyon */
@@ -328,6 +328,7 @@
             gap: 20px; /* Liste elemanları arasındaki boşluk */
             max-width: 90%;
             position: relative;
+            text-decoration: none;
         }
 
         .yaptıklarım li {
@@ -348,6 +349,7 @@
             /* İçeriklerin ortalanması */
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
 
         /* HOVER EFEKTİ (Üzerine gelindiğinde) */
@@ -358,6 +360,7 @@
             border-left: 5px solid #ff64b4; /* Vurgu rengini değiştirebiliriz (Örn: sıcak pembe) */
             cursor: default;
             border-radius: 20px;
+            
         }
 
         /* İlk elemana özel ikon (Opsiyonel) */
@@ -367,6 +370,7 @@
             margin-right: 12px;
             color: #64ffda;
             font-size: 20px;
+            text-decoration: none;
             
         }
 
@@ -374,10 +378,10 @@
         .yaptıklarım li:nth-child(2)::before {
             content: "\f3cd"; /* mobile ikonu */
             font-family: "Font Awesome 6 Solid";
-            margin-right: 1%;
+            margin: auto;
             color: #64ffda;
             font-size: 20px;
-            padding-left: 1%;
+            padding: 1px 1px;
         }
 
         /* Üçüncü elemana özel ikon */
@@ -387,6 +391,12 @@
             margin-right: 1%;
             color: #64ffda;
             font-size: 20px;
+            margin: auto;
+        }
+            .yaptıklarım a {
+            text-decoration: none; /* Alt çizgiyi KESİNLİKLE kaldırır */
+            color: inherit; /* Bağlantı metninin, li'deki rengi almasını sağlar */
+            display: block; /* Bağlantının tüm li alanını doldurmasını sağlar */
         }
 
         /* RESPONSIVE AYARLAR */
@@ -432,7 +442,7 @@
 
                 <p>Yazılım ve Teknoloji alanında ise, sadece eğitim vermekle kalmıyor, aynı zamanda projeler geliştiriyorum:</p>
                 <ul class="yaptıklarım" >
-                    <li>Web Geliştirme (Full-Stack)</li>
+                    <li><a href="https://youtube.com">Web Geliştirme (Full-Stack)</a></li>
                     <li>Mobil Uygulama Geliştirme (Android/kotlin)</li>
                     <li>Veri Bilimi ve Analizi(PYTHON DEVELOPER)</li>
 
