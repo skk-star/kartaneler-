@@ -32,7 +32,7 @@
         }
         body {
             font-family: 'Montserrat', sans-serif;
-            color: #e0e0e0;
+            color: #f1e6e6;
             display: flex;
             min-height: 100vh;
             overflow-x: hidden;
@@ -72,18 +72,21 @@
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
+
         }
 
         .sidebar-nav a {
-            color: #a0a0a0;
+            color: #095fdf;
             font-size: 24px;
             transition: color 0.3s ease, transform 0.3s ease;
             position: relative;
+            border-top-left-radius: 15px;
+            border-bottom-right-radius: 20.5px;
         }
 
         .sidebar-nav a:hover {
-            color: #64ffda; /* Vurgu rengi hoverda */
+            background: linear-gradient(25deg,rgb(230, 62, 62),rgb(241, 235, 235),purple); /* Vurgu rengi hoverda */
             transform: scale(1.1);
         }
 
@@ -209,9 +212,9 @@
         /* --- HAKKIMDA METNİ --- */
         .tanitim p {
             font-family: 'Roboto', sans-serif;
-            font-size: 27px;
+            font-size: 35pxpx;
             line-height: 1.8;
-            color: #e9f893;
+            color: #5ae918;
             margin-top: 25px; /* Hakkımda metninden önce biraz boşluk */
         }
 
@@ -224,8 +227,8 @@
         }
 
         .sosyal-medya a {
-            background: linear-gradient(-45deg,rgb(248, 243, 243),rgb(120, 120, 230));
-            color: #101950;
+            background: linear-gradient(-135deg,rgb(223, 216, 125),rgb(79, 55, 211));
+            color: #010f13;
             font-size: 36px; /* İkon boyutunu büyüt */
             transition: color 0.3s ease, transform 0.3s ease;
             text-decoration: none; /* Alt çizgiyi kaldır */
@@ -234,9 +237,10 @@
         }
 
         .sosyal-medya a:hover {
-            color: #1e43bd; /* Vurgu rengi */
             transform: translateY(-5px) scale(1.1); /* Hafif yukarı ve büyütme */
+            background: linear-gradient(-135deg,red,blue,rgb(168, 206, 30));
         }
+        
 
         /* --- RESPONSIVE TASARIM --- */
         @media (max-width: 768px) {
@@ -358,7 +362,8 @@
 
         /* HOVER EFEKTİ (Üzerine gelindiğinde) */
         .yaptıklarım li:hover {
-            background-color: #2a2a4a; /* Hover'da biraz açılma */
+            background: linear-gradient(-135deg , red, green,blue); /* Hover'da biraz açılma */
+            color: rgb(173, 173, 248);
             transform: translateY(-5px) scale(1.02); /* Hafif yukarı kayma ve büyüme */
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); /* Gölgeyi belirginleştir */
             border-left: 5px solid #ff64b4; /* Vurgu rengini değiştirebiliriz (Örn: sıcak pembe) */
@@ -445,7 +450,7 @@
                 <p>Matematik alanında, Ortaokuldan Üniversiteye kadar her seviyede (Cebir, Analiz, Geometri vb.) kişiselleştirilmiş özel dersler ve akademik destek sağlıyorum.</p>
 
                 <p>Yazılım ve Teknoloji alanında ise, sadece eğitim vermekle kalmıyor, aynı zamanda projeler geliştiriyorum:</p>
-                <ul class="yaptıklarım" >
+                <ul id="Projeler" class="yaptıklarım" >
                     <li><a href="https://youtu.be/uKJNcaRVFtQ?si=yQfuVE0iUPDlJ5xc" title="youtube sayfamdan progelerımı ızlemeye ne dersın">Web Geliştirme (Full-Stack)</a></li>
                     <li>Mobil Uygulama Geliştirme (Android/kotlin)</li>
                     <li>Veri Bilimi ve Analizi(PYTHON DEVELOPER)</li>
@@ -460,6 +465,7 @@
                 <a href="https://github.com/ssk-star" target="_blank" aria-label="GitHub" title="GİTHUB HESABIM"><i class="fa-brands fa-github"></i></a>
                 <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn" title="LİNKEDINIM"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="https://instagram.com/abdulbakibaynaz" target="_blank" aria-label="Instagram" title="İNSTAGRAMIM"><i class="fa-brands fa-instagram"></i></a>
+                <a href="http://www.youtube.com/@matpytbilg63636" title="buda youtubem" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                 <a href="tel:05424309621" aria-label="Telefon"><i class="fa-solid fa-phone" title="BUDA NUMARAM(:"></i></a>
             </div>
         </div>
