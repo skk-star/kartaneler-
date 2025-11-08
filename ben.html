@@ -316,6 +316,89 @@
                 font-size: 26px;
             }
         }
+        /* --- YETENEKLER LİSTESİ TASARIMI (yaptıklarım) --- */
+
+        .yaptıklarım {
+            list-style: none; /* Varsayılan madde işaretlerini kaldır */
+            padding: 0;
+            margin: 30px auto; /* Üstten ve alttan boşluk */
+            display: flex; /* Yatay düzen için flex kullan */
+            flex-wrap: wrap; /* Gerekirse alt satıra geç */
+            justify-content: center;
+            gap: 20px; /* Liste elemanları arasındaki boşluk */
+            max-width: 90%;
+            position: relative;
+        }
+
+        .yaptıklarım li {
+            background-color: #1a1a2e; /* Sidebar rengiyle uyumlu, daha koyu bir arka plan */
+            color: #447de7;
+            padding: 9px 10px;
+            border-radius: 8px; /* Köşeleri yuvarla */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Hafif gölge */
+            border-left: 5px solid #64ffda; /* Sol tarafa vurgu renginde kalın çizgi */
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* Animasyon Geçişleri */
+            transition: all 0.3s ease-in-out; 
+            
+            /* İçeriklerin ortalanması */
+            display: flex;
+            align-items: center;
+        }
+
+        /* HOVER EFEKTİ (Üzerine gelindiğinde) */
+        .yaptıklarım li:hover {
+            background-color: #2a2a4a; /* Hover'da biraz açılma */
+            transform: translateY(-5px) scale(1.02); /* Hafif yukarı kayma ve büyüme */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); /* Gölgeyi belirginleştir */
+            border-left: 5px solid #ff64b4; /* Vurgu rengini değiştirebiliriz (Örn: sıcak pembe) */
+            cursor: default;
+            border-radius: 20px;
+        }
+
+        /* İlk elemana özel ikon (Opsiyonel) */
+        .yaptıklarım li:nth-child(1)::before {
+            content: "\f121"; /* code ikonu (Font Awesome) */
+            font-family: "Font Awesome 6 Brands"; /* Ikon fontunu kullan */
+            margin-right: 12px;
+            color: #64ffda;
+            font-size: 20px;
+            
+        }
+
+        /* İkinci elemana özel ikon */
+        .yaptıklarım li:nth-child(2)::before {
+            content: "\f3cd"; /* mobile ikonu */
+            font-family: "Font Awesome 6 Solid";
+            margin-right: 1%;
+            color: #64ffda;
+            font-size: 20px;
+            padding-left: 1%;
+        }
+
+        /* Üçüncü elemana özel ikon */
+        .yaptıklarım li:nth-child(3)::before {
+            content: "\f200"; /* chart-line ikonu */
+            font-family: "Font Awesome 6 Solid";
+            margin-right: 1%;
+            color: #64ffda;
+            font-size: 20px;
+        }
+
+        /* RESPONSIVE AYARLAR */
+        @media (max-width: 600px) {
+            .yaptıklarım {
+                flex-direction: column; /* Mobil görünümde alt alta diz */
+                gap: 15px;
+            }
+            .yaptıklarım li {
+                width: 100%; /* Tam genişlik kapla */
+            }
+        }
     </style>
 </head>
 <body>
@@ -339,7 +422,7 @@
             <div class="isim">ABDÜLBAKİ BAYNAZ</div>
             <div class="unvan">YAZILIMCI |VERİBİLİMCİ |MATEMATİKÇİ</div>
 
-            <p id="yıldızlar">**********************************************</p>
+            <p id="yıldızlar">********</p>
 
             <div id="hakkımda">
                 <p>🎯
