@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portföy | Abdulbaki Baynaz</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GENEL TASARIM --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        @keyframes color-shift {
+            0% {
+                background-position: 0% 50%;
+            } /* Başlangıç: Soldan */
+            50% {
+                background-position: 100% 50%;
+            } /* Orta: Sağdan */
+            100% {
+                background-position: 0% 50%;
+            } /* Bitiş: Tekrar Soldan */
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+            /* 2. ARKA PLAN DEĞİŞİKLİKLERİ */
+            background: linear-gradient(-45deg, #1a1a2e, #2a0a2e, #0a2e2e, #1a1a2e); 
+            /* 4 Farklı Renk: Koyu Lacivert, Koyu Mor, Koyu Camgöbeği, Koyu Lacivert */
+            background-size: 400% 400%; /* Geçiş efektini büyüt */
+            animation: color-shift 20s ease infinite; /* 20 saniyede sonsuz döngüde animasyon */
+        }
+
+        
+
+        /* --- SİDEBAR --- */
+        .sidebar {
+            width: 80px; /* Sabit genişlik */
+            background-color: #0f0f1c; /* Sidebar için daha koyu ton */
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* İkonları üste ve alta yasla */
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            position: fixed; /* Sabit sidebar */
+            height: 100%;
+            z-index: 1000; /* Diğer içeriklerin üzerinde */
+        }
+
+        .sidebar-logo {
+            margin-bottom: 40px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #64ffda; /* Vurgu rengi */
+            text-decoration: none;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-nav a {
+            color: #a0a0a0;
+            font-size: 24px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-nav a:hover {
+            color: #64ffda; /* Vurgu rengi hoverda */
+            transform: scale(1.1);
+        }
+
+        .sidebar-nav a::after { /* Hoverda alttan çizgi efekti */
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: #64ffda;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .sidebar-nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .sidebar-bottom-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* --- ANA İÇERİK --- */
+        .main-content {
+            margin-left: 80px; /* Sidebar kadar boşluk bırak */
+            flex-grow: 1; /* Kalan alanı kapla */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            width: calc(100% - 80px); /* Sidebar genişliğini düş */
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 38px;
+            color: #64ffda; /* Vurgu rengi */
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1.5px;
+        }
+
+        hr {
+            width: 70%;
+            max-width: 500px;
+            margin: 20px 0 40px; /* Alt boşluğu artır */
+            border: none;
+            height: 1px;
+            background-color: #3a3a5a; /* Daha uyumlu bir çizgi rengi */
+        }
+
+        /* --- TANITIM KISMI --- */
+        .tanitim {
+            /* Tanıtım kutusu daha mat ve belirgin kalsın */
+            background-color: rgba(42, 42, 74, 0.95); /* Yarı saydamlık ekleyerek arka planı hafif göster */
+            width: 80%;
+            max-width: 700px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #3a3a5a;
+            transition: transform 0.3s ease;
+        }
+
+        .tanitim:hover {
+            transform: translateY(-5px); /* Hafif yukarı hareket */
+        }
+
+        /* --- PROFİL FOTOĞRAFI --- */
+        .profil-foto {
+            width: 180px; /* Boyutunu biraz büyüt */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 5px #64ffda, 0 0 0 10px #3a3a5a; /* Çift katmanlı belirgin border */
+            border: 5px solid #0f0f1c; /* İç border */
+            transition: transform 0.3s ease;
+        }
+
+        .profil-foto:hover {
+            transform: scale(1.05); /* Hoverda hafif büyüme */
+        }
+
+        /* --- İSİM VE ÜNVAN --- */
+        .isim {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+
+        .unvan {
+            font-family: 'Roboto', sans-serif; /* Unvan için farklı bir font */
+            font-size: 18px;
+            color: #a0a0a0;
+            margin-bottom: 25px;
+        }
+
+        /* --- HAKKIMDA METNİ --- */
+        .tanitim p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #c0c0c0;
+            margin-top: 25px; /* Hakkımda metninden önce biraz boşluk */
+        }
+
+        /* --- SOSYAL MEDYA BÖLÜMÜ --- */
+        .sosyal-medya { /* Class adı değiştirildi */
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Boşlukları artır */
+        }
+
+        .sosyal-medya a {
+            color: #a0a0a0;
+            font-size: 36px; /* İkon boyutunu büyüt */
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none; /* Alt çizgiyi kaldır */
+        }
+
+        .sosyal-medya a:hover {
+            color: #64ffda; /* Vurgu rengi */
+            transform: translateY(-5px) scale(1.1); /* Hafif yukarı ve büyütme */
+        }
+
+        /* --- RESPONSIVE TASARIM --- */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px; /* Daha küçük sidebar */
+            }
+
+            .main-content {
+                margin-left: 60px;
+                width: calc(100% - 60px);
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .tanitim {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .profil-foto {
+                width: 120px;
+                height: 120px;
+                box-shadow: 0 0 0 3px #64ffda, 0 0 0 6px #3a3a5a;
+            }
+
+            .isim {
+                font-size: 24px;
+            }
+
+            .unvan {
+                font-size: 16px;
+            }
+
+            .tanitim p {
+                font-size: 15px;
+            }
+
+            .sosyal-medya {
+                gap: 20px;
+                margin-top: 30px;
+            }
+
+            .sosyal-medya a {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            .tanitim {
+                padding: 15px;
+            }
+            .profil-foto {
+                width: 100px;
+                height: 100px;
+            }
+            .isim {
+                font-size: 20px;
+            }
+            .unvan {
+                font-size: 14px;
+            }
+            .tanitim p {
+                font-size: 14px;
+            }
+            .sosyal-medya {
+                gap: 15px;
+            }
+            .sosyal-medya a {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <a href="#" class="sidebar-logo">AB</a> <nav class="sidebar-nav">
+            <a href="#hakkımda" aria-label="Hakkımda"><i class="fas fa-user"></i></a>
+            <a href="#projeler" aria-label="Projeler"><i class="fas fa-code"></i></a>
+            <a href="#iletisim" aria-label="İletişim"><i class="fas fa-envelope"></i></a>
+        </nav>
+        <div class="sidebar-bottom-nav">
+            </div>
+    </aside>
+
+    <div class="main-content">
+        <h1>MERHABA, HOŞGELDİNİZ!</h1>
+        <hr>
+
+        <div class="tanitim">
+            <img src="./ögrenci.jpg" alt="Profil Fotoğrafı" class="profil-foto">
+
+            <div class="isim">Abdulbaki Baynaz</div>
+            <div class="unvan">Yazılım Geliştirici | Siber Güvenlik Meraklısı</div>
+
+            <hr>
+
+            <div id="hakkımda">
+                <p>Yazılım dünyasına tutkuyla bağlıyım. Web geliştirme (Frontend & Backend), siber güvenlik ve yapay zeka konularında kendimi sürekli geliştiriyorum.
+                Yeni teknolojileri öğrenmek ve üretmek benim için bir yaşam tarzı.</p>
+            </div>
+
+            <div class="sosyal-medya">
+                <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub" title="GİTHUB HESABIM"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn" title="LİNKEDINIM"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://instagram.com/yourusername" target="_blank" aria-label="Instagram" title="İNSTAGRAMIM"><i class="fa-brands fa-instagram"></i></a>
+                <a href="tel:05424309621" aria-label="Telefon"><i class="fa-solid fa-phone" title="BUDA NUMARAM(:"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
