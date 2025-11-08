@@ -163,18 +163,21 @@
 
         /* --- PROFİL FOTOĞRAFI --- */
         .profil-foto {
-            width: 180px; /* Boyutunu biraz büyüt */
-            height: 180px;
-            border-radius: 50%;
+            width: 100px; /* Boyutunu biraz büyüt */
+            height: 100px;
+            border-bottom-left-radius: 50px;
+            border-top-right-radius: 50px;
             object-fit: cover;
             margin-bottom: 20px;
             box-shadow: 0 0 0 5px #64ffda, 0 0 0 10px #3a3a5a; /* Çift katmanlı belirgin border */
             border: 5px solid #0f0f1c; /* İç border */
-            transition: transform 0.3s ease;
+            transition: transform 3s ease;
         }
 
         .profil-foto:hover {
             transform: scale(1.05); /* Hoverda hafif büyüme */
+            border-radius: 50px;
+            border: 3px solid rgb(92, 231, 92);
         }
         /*yıldızlar*/
         #yıldızlar{
@@ -335,7 +338,8 @@
             background-color: #1a1a2e; /* Sidebar rengiyle uyumlu, daha koyu bir arka plan */
             color: #447de7;
             padding: 9px 10px;
-            border-radius: 8px; /* Köşeleri yuvarla */
+            border-top-left-radius: 25px; /* Köşeleri yuvarla */
+            border-bottom-right-radius: 25px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Hafif gölge */
             border-left: 5px solid #64ffda; /* Sol tarafa vurgu renginde kalın çizgi */
             font-family: 'Roboto', sans-serif;
@@ -442,7 +446,7 @@
 
                 <p>Yazılım ve Teknoloji alanında ise, sadece eğitim vermekle kalmıyor, aynı zamanda projeler geliştiriyorum:</p>
                 <ul class="yaptıklarım" >
-                    <li><a href="https://youtube.com">Web Geliştirme (Full-Stack)</a></li>
+                    <li><a href="https://youtube.com" title="youtube sayfamdan progelerımı ızlemeye ne dersın">Web Geliştirme (Full-Stack)</a></li>
                     <li>Mobil Uygulama Geliştirme (Android/kotlin)</li>
                     <li>Veri Bilimi ve Analizi(PYTHON DEVELOPER)</li>
 
