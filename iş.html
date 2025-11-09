@@ -568,44 +568,65 @@
             cursor: pointer;
         }
 
-        @media (max-width: 768px) {
+      @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                /* Eski 'display: flex' yerine menüyü kapatmak için bunları kullanıyoruz */
+                display: flex; /* Flex yapısını koru */
+                flex-direction: column;
+                width: 50%;
+                position: absolute;
+                top: 60px; 
+                left: 30%; 
+                background: linear-gradient(10deg,red,blue,yellow); 
+                padding: 0; /* Kapalıyken padding sıfır */
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 50px;
+                
+                /* ✨ YENİ: Başlangıçta menüyü görünmez ve yüksekliğini sıfır yap */
+                max-height: 0; /* Kapalı durum */
+                overflow: hidden; /* Taşmayı gizle */
+                opacity: 0; /* Başlangıçta tamamen gizle */
+                
+                /* ✨ YENİ: Yumuşak geçişi tanımla (örneğin 0.5 saniye) */
+                transition: max-height 1.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out; 
+            }
+
+            /* JavaScript ile .open sınıfı eklendiğinde menüyü göster */
+            .nav-links.open {
+                /* ✨ YENİ: Açık durumdayken yüksekliği ayarla */
+                /* İçeriğinizi kapsayacak kadar büyük bir değer verin */
+                max-height: 300px; /* Menü içeriği bu yükseklikten az olduğu sürece sorun yok */
+                opacity: 1; /* Görünür yap */
+                padding: 20px 0; /* Açıkken paddingi geri getir */
+            }
+            
+            .nav-links li a {
+                color: #1a202c; 
+                padding: 10px 0;
+                display: block;
+                text-align: center;
+                font-size: 1.1rem;
             }
 
             .mobile-menu-btn {
                 display: block;
             }
 
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-            .card { width: 90%; }
-            .card-container { flex-direction: column; align-items: center; }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .contact-form {
-                flex-direction: column;
-            }
-
-            .contact-form input {
-                width: 100%;
-            }
-
-            #ai-agent-chat {
-                width: 90%;
-                right: 5%;
-                bottom: 100px;
-                height: 500px;
-            }
+            /* Diğer mevcut mobil stilleriniz... */
+            /* ... */
         }
 
-        @media (max-width: 480px) {
-            #ai-agent-chat { width: 92%; right: 4%; left: 4%; bottom: 90px; height: 480px; }
-        }
+        /* Masaüstü görünümde (768px üzeri) menüyü her zaman görünür yapmak için bu kuralı ekleyin */
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex !important;
+                max-height: none !important;
+                opacity: 1 !important;
+                padding: 0 !important;
+                position: static !important;
+                width: auto !important;
+            }
+}
     </style>
 </head>
 <body>
@@ -807,6 +828,15 @@
             input.value = '';
             messages.scrollTop = messages.scrollHeight;
         }
+        // Navigasyon elementlerini alıyoruz
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+
+            // Tıklama olayını dinliyoruz
+            mobileMenuBtn.addEventListener('click', () => {
+                // Navigasyon linklerine 'open' veya 'active' sınıfını ekle/kaldır
+                navLinks.classList.toggle('open');
+            });
     </script>
 
 </body>
