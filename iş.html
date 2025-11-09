@@ -46,9 +46,9 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(-135deg,rgb(238, 232, 232),rgb(157, 157, 240),rgb(243, 243, 240));
             backdrop-filter: blur(10px);
-            z-index: 1000;
+            z-index: 100;
             padding: 1.2rem 5%;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
         }
@@ -87,10 +87,11 @@
         }
 
         .cta-btn {
-            background: linear-gradient(135deg, #0052FF 0%, #7c3aed 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #0052FF 0%,white, #7c3aed 100%);
+            color: #101663;
             padding: 0.8rem 1.8rem;
-            border-radius: 50px;
+            border-bottom-left-radius: 35px;
+            border-top-right-radius: 35px;
             text-decoration: none;
             font-weight: 600;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -163,13 +164,15 @@
         }
 
         .btn-primary {
-            background: #ffffff;
-            color: #0052FF;
-            padding: 1.1rem 2.8rem;
-            border-radius: 50px;
+            background: linear-gradient(-12deg,red,black);
+            color: #a9c4fd;
+            padding: 1.01rem 2.1rem;
+            border-bottom-left-radius:23px;
+            border-top-left-radius: 50px;
+            border-bottom-right-radius: 25px;
             text-decoration: none;
             font-weight: 700;
-            transition: all 0.3s;
+            transition: all 0.7s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border: none;
             cursor: pointer;
@@ -177,27 +180,33 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotate(8deg) scale(1.06);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             background: linear-gradient(50deg, rgb(146, 146, 231), green, yellow, rgb(212, 32, 203));
             color: #1a202c;
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            color: #ffffff;
-            padding: 1.1rem 2.8rem;
-            border-radius: 50px;
+            background: linear-gradient(-12deg,rgb(231, 217, 217),black,blue);
+            color: #a9c4fd;
+            padding: 1.01rem 2.1rem;
+            border-bottom-left-radius:23px;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 25px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-weight: 700;
+            transition: all 0.7s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotate(-8deg) scale(1.06);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(50deg, rgb(185, 38, 12), green, rgb(94, 255, 0), rgb(32, 65, 212));
+            color: #1a202c;
         }
 
         /* Wave Transition */
