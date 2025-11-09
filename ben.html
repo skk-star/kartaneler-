@@ -38,10 +38,10 @@
             overflow-x: hidden;
 
             /* 2. ARKA PLAN DEĞİŞİKLİKLERİ */
-            background: linear-gradient(-45deg, #b5b5f3, #2a0a2e, #1e5757, #1a2d2e); 
+            background: linear-gradient(90deg,red,rgb(45, 109, 248),rgb(140, 231, 35),yellow,gray); 
             /* 4 Farklı Renk: Koyu Lacivert, Koyu Mor, Koyu Camgöbeği, Koyu Lacivert */
             background-size: 400% 400%; /* Geçiş efektini büyüt */
-            animation: color-shift 20s ease infinite; /* 20 saniyede sonsuz döngüde animasyon */
+            animation: color-shift 4s infinite; /* 20 saniyede sonsuz döngüde animasyon */
         }
 
         
@@ -223,8 +223,13 @@
             font-family: 'Roboto', sans-serif;
             font-size: 35pxpx;
             line-height: 1.8;
-            color: #5ae918;
+            color: #052829;
             margin-top: 25px; /* Hakkımda metninden önce biraz boşluk */
+        }
+        .tanitim p:hover{
+            color:#f1e6e6;
+            transform: scale(1.05);
+            text-decoration: underline;
         }
 
         /* --- SOSYAL MEDYA BÖLÜMÜ --- */
