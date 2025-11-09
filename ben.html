@@ -49,13 +49,13 @@
         /* --- SİDEBAR --- */
         .sidebar {
             width: 80px; /* Sabit genişlik */
-            background-color: #0f0f1c; /* Sidebar için daha koyu ton */
+            background: linear-gradient(180deg,rgb(115, 255, 0),red,rgb(178, 178, 248)); /* Sidebar için daha koyu ton */
             padding: 20px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between; /* İkonları üste ve alta yasla */
-            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            box-shadow: 4px 0 10px rgba(223, 221, 221, 0.3);
             position: fixed; /* Sabit sidebar */
             height: 100%;
             z-index: 1000; /* Diğer içeriklerin üzerinde */
@@ -65,20 +65,29 @@
             margin-bottom: 40px;
             font-size: 28px;
             font-weight: 700;
-            color: #64ffda; /* Vurgu rengi */
-            text-decoration: none;
+            background: linear-gradient(90deg,rgb(108, 211, 194),red);
+            border-bottom-left-radius: 15px;
+            border-top-right-radius: 15px;
+            color: #1005507a; /* Vurgu rengi */
+            text-decoration: dashed;
+            transition: 0.4s ease-in-out;
+        }
+        .sidebar-logo:hover{
+            transform: scale(1.27);
+            background: linear-gradient(90deg,rgb(85, 231, 104),black);
+            border-radius: 50px;
         }
 
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 100px;
 
         }
 
         .sidebar-nav a {
             color: #095fdf;
-            font-size: 24px;
+            font-size: 32px;
             transition: color 0.3s ease, transform 0.3s ease;
             position: relative;
             border-top-left-radius: 15px;
@@ -109,7 +118,7 @@
         .sidebar-bottom-nav {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 60px;
         }
 
         /* --- ANA İÇERİK --- */
@@ -147,7 +156,7 @@
         /* --- TANITIM KISMI --- */
         .tanitim {
             /* Tanıtım kutusu daha mat ve belirgin kalsın */
-            background: linear-gradient(-45deg ,rgb(46, 77, 5),rgb(111, 160, 250)); /* Yarı saydamlık ekleyerek arka planı hafif göster */
+            background: linear-gradient(-45deg,red,yellow,blue); /* Yarı saydamlık ekleyerek arka planı hafif göster */
             width: 80%;
             max-width: 700px;
             padding: 30px;
@@ -161,7 +170,7 @@
 
         .tanitim:hover {
             transform: translateY(-10px); /* Hafif yukarı hareket */
-            background: linear-gradient(135deg,rgb(226, 199, 199),rgb(15, 15, 80));
+            background: linear-gradient(135deg,blue,green,red);
         }
 
         /* --- PROFİL FOTOĞRAFI --- */
