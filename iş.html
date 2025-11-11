@@ -229,10 +229,10 @@
         .content-section h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(30deg, yellow, purple);
+            background: linear-gradient(30deg, yellow, rgb(80, 228, 142),blue);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            border: 5px solid rgb(207, 80, 207);
+            border: 5px solid rgb(240, 203, 240);
             border-bottom-left-radius: 45px;
             border-top-right-radius: 45px;
             padding: 10px 20px;
@@ -268,7 +268,7 @@
         }
 
         .card {
-            background: linear-gradient(45deg, red, rgb(248, 210, 210), blue, yellow, purple);
+            background: linear-gradient(45deg, red, rgb(248, 210, 210), blue, purple);
             border: 3px solid gray;
             border-bottom-right-radius: 50px;
             border-top-left-radius: 50px;
@@ -276,6 +276,8 @@
             padding: 30px;
             margin: 20px;
             width: 30%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             min-width: 280px;
             text-align: center;
             text-decoration: underline;
@@ -288,8 +290,10 @@
         
         .card:hover {
             transform: translateY(-10px) scale(1.15) rotate(-6deg);
-            background: linear-gradient(120deg, #bac8db, #2563eb, #06b6d4);
+            background: linear-gradient(120deg, #5487ce, #2563eb, #c7f7ff);
             box-shadow: 0 10px 40px rgba(0, 150, 255, 0.5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .card.active {
             opacity: 1;
