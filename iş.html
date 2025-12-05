@@ -13,9 +13,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url("işveren.WEBP") center center fixed;
-            background-size: cover;
-            color: #ce4444;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%),
+                        url('işresim.jpg') center/cover no-repeat fixed;
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
         }
@@ -27,8 +27,8 @@
             display: grid;
             grid-template-columns: 350px 1fr;
             gap: 30px;
-            background: rgba(226, 195, 195, 0.05);
-            backdrop-filter: blur(7px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -65,7 +65,7 @@
             display: block;
             font-size: 0.95em;
             margin-bottom: 12px;
-            color: #3d2aeb;
+            color: #ffd700;
             font-weight: 600;
         }
 
@@ -175,11 +175,13 @@
         }
 
         .stats-section {
+            max-width: 1400px;
+            width: 100%;
+            margin: 30px auto 0 auto;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
-            margin-top: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
@@ -318,7 +320,6 @@
             </div>
         </div>
     </div>
-</div>
 
     <script>
         const canvas = document.getElementById('canvas');
