@@ -2,23 +2,24 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kraliçe Anne'nin Danteli</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(85deg, rgba(205, 230, 231, 0.2) 0%, rgba(230, 71, 222, 0.2)  100%),
-                        url('./işresim1.jpg') center/cover no-repeat fixed;
+            background: linear-gradient(85deg, rgba(205, 230, 231, 0.2) 0%, rgba(230, 71, 222, 0.2) 100%), #1a1a2e;
             color: #fff;
-            font-size: large;
+            font-size: 16px;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
+            overflow-x: hidden;
         }
 
         .container {
@@ -27,45 +28,45 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 350px 1fr;
-            gap: 30px;
+            gap: 20px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(1.5px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .controls {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
         }
 
         h1 {
-            font-size: 1.8em;
-            background: linear-gradient(135deg, #0011ff, #639c08,rgb(190, 10, 40));
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #0011ff, #639c08, rgb(190, 10, 40));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #aaa;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .control-group {
             background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .control-group label {
             display: block;
-            font-size: 0.95em;
-            margin-bottom: 12px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
             color: #0a2fd4;
             font-weight: 600;
         }
@@ -73,7 +74,7 @@
         .slider-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         input[type="range"] {
@@ -83,13 +84,14 @@
             background: rgba(255, 255, 255, 0.1);
             outline: none;
             -webkit-appearance: none;
+            touch-action: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: linear-gradient(135deg, #011214, #29d2d8);
             cursor: pointer;
@@ -97,149 +99,234 @@
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #51e9e9, #23b850,rgb(167, 90, 218));
+            background: linear-gradient(135deg, #51e9e9, #23b850, rgb(167, 90, 218));
             cursor: pointer;
             border: none;
             box-shadow: 0 2px 8px rgba(231, 230, 221, 0.5);
         }
 
         .value-display {
-            min-width: 40px;
+            min-width: 45px;
             text-align: center;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #378f21;
         }
 
         .button-group {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 10px;
         }
 
         button {
-            flex: 1;
-            padding: 12px 20px;
-            background: linear-gradient(35deg, #f1efe2, #940c99,rgb(23, 23, 238));
+            padding: 14px 20px;
+            background: linear-gradient(35deg, #f1efe2, #940c99, rgb(23, 23, 238));
             color: #1a1a2e;
             border: none;
-            border-bottom-left-radius: 44px;
-            border-top-right-radius: 44px;
+            border-radius: 12px;
             font-size: 0.95em;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.5s ease;
-        }
-
-        button:hover {
-            transform: translateY(-3px) rotate(6deg) scale(1.06);
-            box-shadow: 0 4px 12px rgba(61, 241, 241, 0.973);
-            border-radius: 28px;
-            background: linear-gradient(35deg, #f1efe2, #f09ef3,rgb(163, 238, 23));
+            transition: all 0.3s ease;
+            touch-action: manipulation;
         }
 
         button:active {
-            transform: translateY(0);
+            transform: scale(0.95);
         }
 
         .canvas-container {
             background: #000;
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 600px;
+            min-height: 400px;
             box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
 
         canvas {
             max-width: 100%;
             height: auto;
             border-radius: 10px;
+            display: block;
         }
 
         .info {
             border-left: 3px solid #e2ddbe;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #04133b;
-            line-height: 1.6;
+            line-height: 1.5;
             backdrop-filter: blur(2px);
-            
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .stats-section {
             max-width: 1400px;
             width: 100%;
-            margin: 30px auto 0 auto;
+            margin: 20px auto 0 auto;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(1px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            
         }
 
         .stats-section h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.3em;
+            margin-bottom: 15px;
             color: #c020e0;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
 
         .stat-card {
-            background: linear-gradient(45deg,rgb(172, 146, 172,0.4),rgb(16, 223, 16,0),rgb(161, 161, 224,0.3));
+            background: linear-gradient(45deg, rgb(172, 146, 172, 0.4), rgb(16, 223, 16, 0), rgb(161, 161, 224, 0.3));
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
             backdrop-filter: blur(18px);
         }
 
-        .stat-card:hover {
-            transform:  translate(-9px) rotate(2deg) translateX(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
-            border-color: rgba(163, 235, 31, 0.904);
-            border-radius: 50PX;
-        }
-
         .stat-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-            transition: 3sn ease-in-out;
-        }
-        .set-icon:hover {
-            transform: scale(1.2);
-            font-size: 3em;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: #2751d8;
+            font-size: 1.8em;
             margin-bottom: 8px;
         }
 
+        .stat-label {
+            font-size: 0.8em;
+            color: #2751d8;
+            margin-bottom: 6px;
+        }
+
         .stat-value {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #630a79;
+        }
+
+        /* Mobil optimizasyonu */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+                font-size: 14px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.3em;
+            }
+
+            .subtitle {
+                font-size: 0.8em;
+            }
+
+            .control-group {
+                padding: 12px;
+            }
+
+            .control-group label {
+                font-size: 0.85em;
+            }
+
+            button {
+                padding: 12px 16px;
+                font-size: 0.9em;
+            }
+
+            .canvas-container {
+                min-height: 300px;
+                padding: 10px;
+            }
+
+            .info {
+                font-size: 0.75em;
+                padding: 10px;
+            }
+
+            .stats-section {
+                padding: 15px;
+            }
+
+            .stats-section h2 {
+                font-size: 1.1em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-icon {
+                font-size: 1.5em;
+            }
+
+            .stat-label {
+                font-size: 0.75em;
+            }
+
+            .stat-value {
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 3px;
+            }
+
+            .container {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            h1 {
+                font-size: 1.1em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffd700;
+            font-size: 1.2em;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
         }
     </style>
 </head>
@@ -253,34 +340,42 @@
             </div>
 
             <div class="control-group">
-                <label>Dal Sayısı (Branches)</label>
+                <label>Tekrar Sayısı (Sekizgen için 8)</label>
                 <div class="slider-container">
-                    <input type="range" id="branches" min="3" max="13" value="3" step="1">
-                    <span class="value-display" id="branchesValue">3</span>
+                    <input type="range" id="repetitions" min="4" max="16" value="8" step="1">
+                    <span class="value-display" id="repetitionsValue">8</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <label>Derinlik (Depth)</label>
+                <label>Derinlik (Katman)</label>
                 <div class="slider-container">
-                    <input type="range" id="depth" min="1" max="7" value="1" step="1">
-                    <span class="value-display" id="depthValue">1</span>
+                    <input type="range" id="depth" min="1" max="8" value="5" step="1">
+                    <span class="value-display" id="depthValue">5</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <label>Dal Uzunluğu (Length)</label>
+                <label>Dal Uzunluğu</label>
                 <div class="slider-container">
-                    <input type="range" id="length" min="50" max="150" value="50" step="5">
+                    <input type="range" id="length" min="20" max="80" value="50" step="5">
                     <span class="value-display" id="lengthValue">50</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Dallanma Açısı</label>
+                <div class="slider-container">
+                    <input type="range" id="angle" min="15" max="75" value="45" step="5">
+                    <span class="value-display" id="angleValue">45°</span>
                 </div>
             </div>
 
             <div class="control-group">
                 <label>Animasyon Hızı</label>
                 <div class="slider-container">
-                    <input type="range" id="speed" min="1" max="50" value="1" step="1">
-                    <span class="value-display" id="speedValue">1ms</span>
+                    <input type="range" id="speed" min="0" max="20" value="2" step="1">
+                    <span class="value-display" id="speedValue">2ms</span>
                 </div>
             </div>
 
@@ -290,47 +385,52 @@
             </div>
 
             <div class="info">
-                <strong>💡 İpucu:</strong> Parametreleri ayarlayın ve "Çiz" butonuna basarak yeni desenler oluşturun. Daha yüksek derinlik değerleri daha detaylı fraktallar üretir! Ha birde  başlangıçta kasabilir.Durmadan temizle sil yapmayın ilk önce ince ayarınızı verin sonra temizle sonra çiz bu kadar easy oluyor işte reis.
+                <strong>💡 Nasıl Çalışır:</strong> Tek bir fraktal desen çizilir, sonra bu desen 45°'lik açılarla 8 kez tekrarlanarak sekizgen oluşturulur.
+                <br><br>
+                <strong>Temel hal:</strong> 8 tekrar + 5 katman = Mükemmel simetrik desen!
+                <br><br>
+                <strong>⚠️ Uyarı:</strong> Yüksek derinlik değerleri mobilde yavaşlamaya neden olabilir. 6'dan fazla katman önerilmez.
             </div>
         </div>
 
         <div class="canvas-container">
+            <div class="loading" id="loading">⏳ Çiziliyor...</div>
             <canvas id="canvas" width="700" height="700"></canvas>
         </div>
     </div>
 
     <div class="stats-section">
-        <h2>📊 Fraktal İstatistikleri(en iyi kısım bence bunları saydırmak harbi daha zordu)</h2>
+        <h2>📊 Fraktal İstatistikleri</h2>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">🌿</div>
-                <div class="stat-label">Toplam Dal Sayısı</div>
+                <div class="stat-label">Toplam Dal</div>
                 <div class="stat-value" id="totalBranches">0</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📏</div>
-                <div class="stat-label">Toplam Çizgi Sayısı</div>
+                <div class="stat-label">Çizgi Sayısı</div>
                 <div class="stat-value" id="totalLines">0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">✨</div>
-                <div class="stat-label">Uç Nokta Sayısı</div>
-                <div class="stat-value" id="totalDots">0</div>
+                <div class="stat-icon">🔄</div>
+                <div class="stat-label">Tekrar</div>
+                <div class="stat-value" id="totalRepetitions">8</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⏱️</div>
-                <div class="stat-label">Çizim Süresi</div>
+                <div class="stat-label">Süre</div>
                 <div class="stat-value" id="drawTime">0s</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🔢</div>
-                <div class="stat-label">Karmaşıklık Skoru</div>
+                <div class="stat-label">Karmaşıklık</div>
                 <div class="stat-value" id="complexity">0</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🎨</div>
-                <div class="stat-label">Simetri Derecesi</div>
-                <div class="stat-value" id="symmetry">-</div>
+                <div class="stat-label">Geometri</div>
+                <div class="stat-value" id="geometry">8-gen</div>
             </div>
         </div>
     </div>
@@ -338,18 +438,43 @@
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
+        const loading = document.getElementById('loading');
+        
+        // Mobil için canvas boyutunu optimize et
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const size = Math.min(container.clientWidth - 30, container.clientHeight - 30, 700);
+            canvas.width = size;
+            canvas.height = size;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            if (!isDrawing) {
+                resizeCanvas();
+                drawFractal();
+            }
+        });
+
+        const centerX = () => canvas.width / 2;
+        const centerY = () => canvas.height / 2;
 
         let drawingQueue = [];
         let isDrawing = false;
         let drawStartTime = 0;
         let lineCount = 0;
-        let dotCount = 0;
+        let animationFrame = null;
+
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A',
+            '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2',
+            '#F8B739', '#52B788', '#EF476F', '#06D6A0',
+            '#118AB2', '#073B4C', '#FFD166', '#FF6B9D'
+        ];
 
         // Slider güncellemeleri
-        document.getElementById('branches').addEventListener('input', (e) => {
-            document.getElementById('branchesValue').textContent = e.target.value;
+        document.getElementById('repetitions').addEventListener('input', (e) => {
+            document.getElementById('repetitionsValue').textContent = e.target.value;
         });
 
         document.getElementById('depth').addEventListener('input', (e) => {
@@ -360,143 +485,149 @@
             document.getElementById('lengthValue').textContent = e.target.value;
         });
 
-        document.getElementById('speed').addEventListener('input', (e) => {
-            document.getElementById('speedValue').textContent = e.target.value + 'ms';
+        document.getElementById('angle').addEventListener('input', (e) => {
+            document.getElementById('angleValue').textContent = e.target.value + '°';
         });
 
-        function drawBranch(x, y, angle, length, depth, atTip = false) {
-            if (depth === 0) {
-                if (atTip) {
-                    drawTipDetail(x, y, angle, length * 0.5, 2, 30);
-                }
-                return;
-            }
+        document.getElementById('speed').addEventListener('input', (e) => {
+            const val = e.target.value;
+            document.getElementById('speedValue').textContent = val === '0' ? 'Hızlı' : val + 'ms';
+        });
+
+        function drawSinglePattern(x, y, angle, length, depth, branchAngle, color) {
+            if (depth === 0) return;
 
             const endX = x + length * Math.cos(angle);
             const endY = y + length * Math.sin(angle);
-
-            // Çizgi çizimini kuyruğa ekle
+            
             drawingQueue.push({
                 type: 'line',
-                x1: x, y1: y, x2: endX, y2: endY
+                x1: x, y1: y, x2: endX, y2: endY,
+                color: color
             });
             lineCount++;
 
-            const isNearTip = (depth === 1);
+            const newLength = length * 0.65;
 
-            // Sol dal
-            drawBranch(endX, endY, angle + Math.PI / 6, length * 0.7, depth - 1, isNearTip);
+            drawSinglePattern(endX, endY, angle + branchAngle, newLength, depth - 1, branchAngle, color);
+            drawSinglePattern(endX, endY, angle - branchAngle, newLength, depth - 1, branchAngle, color);
 
-            // Sağ dal
-            drawBranch(endX, endY, angle - Math.PI / 6, length * 0.7, depth - 1, isNearTip);
-        }
-
-        function drawTipDetail(x, y, angle, length, iterations, branchAngle) {
-            if (iterations === 0 || length < 2) {
-                drawingQueue.push({
-                    type: 'dot',
-                    x: x, y: y
-                });
-                dotCount++;
-                return;
-            }
-
-            for (let i = 0; i < 3; i++) {
-                const angleOffset = (i - 1) * branchAngle * Math.PI / 180;
-                const newAngle = angle + angleOffset;
-                const endX = x + length * Math.cos(newAngle);
-                const endY = y + length * Math.sin(newAngle);
-
-                drawingQueue.push({
-                    type: 'line',
-                    x1: x, y1: y, x2: endX, y2: endY,
-                    thin: true
-                });
-                lineCount++;
-
-                drawTipDetail(endX, endY, newAngle, length * 0.6, iterations - 1, branchAngle);
+            if (depth > 1) {
+                drawSinglePattern(endX, endY, angle, newLength * 0.8, depth - 1, branchAngle, color);
             }
         }
 
+        // Performans optimizasyonu: requestAnimationFrame kullan
         function animateDraw() {
             if (drawingQueue.length === 0) {
                 isDrawing = false;
+                loading.classList.remove('active');
+                
                 // Merkez noktası
                 ctx.beginPath();
-                ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+                ctx.arc(centerX(), centerY(), 8, 0, 2 * Math.PI);
                 ctx.fillStyle = '#ffd700';
                 ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
                 
-                // İstatistikleri güncelle
                 updateStats();
                 return;
             }
 
             isDrawing = true;
-            const item = drawingQueue.shift();
-
-            if (item.type === 'line') {
-                ctx.beginPath();
-                ctx.moveTo(item.x1, item.y1);
-                ctx.lineTo(item.x2, item.y2);
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = item.thin ? 0.5 : 0.8;
-                ctx.stroke();
-            } else if (item.type === 'dot') {
-                ctx.beginPath();
-                ctx.arc(item.x, item.y, 1.5, 0, 2 * Math.PI);
-                ctx.fillStyle = 'lightblue';
-                ctx.fill();
-            }
-
             const speed = parseInt(document.getElementById('speed').value);
-            setTimeout(animateDraw, speed); // Kullanıcının belirlediği hız
+            
+            // Hız = 0 ise tüm çizgileri birden çiz (performans modu)
+            if (speed === 0) {
+                ctx.beginPath();
+                while (drawingQueue.length > 0) {
+                    const item = drawingQueue.shift();
+                    if (item.type === 'line') {
+                        ctx.strokeStyle = item.color;
+                        ctx.lineWidth = 1.5;
+                        ctx.moveTo(item.x1, item.y1);
+                        ctx.lineTo(item.x2, item.y2);
+                        ctx.stroke();
+                    }
+                }
+                animateDraw();
+            } else {
+                // Animasyonlu çizim
+                const batchSize = Math.max(1, Math.floor(50 / speed)); // Hıza göre batch
+                for (let i = 0; i < batchSize && drawingQueue.length > 0; i++) {
+                    const item = drawingQueue.shift();
+                    if (item.type === 'line') {
+                        ctx.beginPath();
+                        ctx.moveTo(item.x1, item.y1);
+                        ctx.lineTo(item.x2, item.y2);
+                        ctx.strokeStyle = item.color;
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+                
+                animationFrame = requestAnimationFrame(animateDraw);
+            }
         }
 
         function updateStats() {
-            const branches = parseInt(document.getElementById('branches').value);
+            const repetitions = parseInt(document.getElementById('repetitions').value);
             const depth = parseInt(document.getElementById('depth').value);
             const drawTime = ((Date.now() - drawStartTime) / 1000).toFixed(2);
             
-            // Toplam dal sayısı hesaplama (her derinlikte 2 dal açılıyor)
-            const totalBranches = branches * (Math.pow(2, depth) - 1);
+            const branchesPerPattern = Math.pow(3, depth);
+            const totalBranches = repetitions * branchesPerPattern;
             
-            // Karmaşıklık skoru
-            const complexity = Math.round(branches * depth * 10);
+            const complexity = Math.round(repetitions * depth * 25);
+            const geometry = repetitions === 8 ? '8-gen' : 
+                            repetitions === 6 ? '6-gen' :
+                            repetitions === 4 ? '4-gen' : repetitions + '-gen';
             
-            // Simetri derecesi
-            const symmetry = branches >= 8 ? 'Yüksek' : branches >= 6 ? 'Orta' : 'Düşük';
-            
-            document.getElementById('totalBranches').textContent = totalBranches;
+            document.getElementById('totalBranches').textContent = Math.round(totalBranches);
             document.getElementById('totalLines').textContent = lineCount;
-            document.getElementById('totalDots').textContent = dotCount;
+            document.getElementById('totalRepetitions').textContent = repetitions;
             document.getElementById('drawTime').textContent = drawTime + 's';
             document.getElementById('complexity').textContent = complexity;
-            document.getElementById('symmetry').textContent = symmetry;
+            document.getElementById('geometry').textContent = geometry;
         }
 
         function drawFractal() {
-            if (isDrawing) return; // Eğer çizim devam ediyorsa bekle
+            if (isDrawing) {
+                if (animationFrame) cancelAnimationFrame(animationFrame);
+            }
             
+            loading.classList.add('active');
             clearCanvas();
-            drawingQueue = []; // Kuyruğu temizle
+            drawingQueue = [];
             lineCount = 0;
-            dotCount = 0;
             drawStartTime = Date.now();
 
-            const branches = parseInt(document.getElementById('branches').value);
+            const repetitions = parseInt(document.getElementById('repetitions').value);
             const depth = parseInt(document.getElementById('depth').value);
             const length = parseInt(document.getElementById('length').value);
+            const branchAngle = parseInt(document.getElementById('angle').value) * Math.PI / 180;
 
-            const angleStep = (2 * Math.PI) / branches;
+            const rotationAngle = (2 * Math.PI) / repetitions;
 
-            for (let i = 0; i < branches; i++) {
-                const angle = Math.PI / 2 + i * angleStep;
-                drawBranch(centerX, centerY, angle, length, depth);
+            for (let i = 0; i < repetitions; i++) {
+                const angle = i * rotationAngle;
+                const color = colors[i % colors.length];
+                
+                drawSinglePattern(
+                    centerX(), 
+                    centerY(), 
+                    angle - Math.PI / 2,
+                    length, 
+                    depth, 
+                    branchAngle, 
+                    color
+                );
             }
 
-            // Animasyonu başlat
-            animateDraw();
+            // Küçük gecikme ile animasyonu başlat (UI'ın güncellenmesi için)
+            setTimeout(() => animateDraw(), 10);
         }
 
         function clearCanvas() {
