@@ -14,7 +14,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(85deg, rgba(205, 230, 231, 0.2) 0%, rgba(230, 71, 222, 0.2) 100%), #1a1a2e;
+            background: linear-gradient(85deg, rgba(205, 230, 231, 0.2) 0%, rgba(230, 71, 222, 0.2) 100%),
+                        url('./işresim1.jpg') center/cover no-repeat fixed;
             color: #fff;
             font-size: 16px;
             min-height: 100vh;
@@ -93,16 +94,16 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #011214, #29d2d8);
+            background: linear-gradient(135deg, #0ae2fa, #4bdb11,rgb(41, 24, 5));
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(116, 47, 15, 0.212);
+            box-shadow: 0 5px 8px rgba(116, 47, 15, 0.212);
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #51e9e9, #23b850, rgb(167, 90, 218));
+            background: linear-gradient(135deg, #51e9e9, #1132ee, rgb(167, 90, 218));
             cursor: pointer;
             border: none;
             box-shadow: 0 2px 8px rgba(231, 230, 221, 0.5);
@@ -127,13 +128,22 @@
             padding: 14px 20px;
             background: linear-gradient(35deg, #f1efe2, #940c99, rgb(23, 23, 238));
             color: #1a1a2e;
-            border: none;
+            border: solid 1px blueviolet;
             border-radius: 12px;
             font-size: 0.95em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             touch-action: manipulation;
+            box-shadow: 0 9px 15px rgba(60, 139, 6, 0.932);
+        }
+        button:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 9px 15px rgba(59, 252, 236, 0.993);
+            border-radius: 50px;
+            background: linear-gradient(35deg, #fada0d, #57e77b, rgb(23, 23, 238));
+            
+            
         }
 
         button:active {
@@ -160,14 +170,18 @@
         }
 
         .info {
-            border-left: 3px solid #e2ddbe;
+            border-left: 3px solid #1deef5;
             padding: 12px;
             border-radius: 8px;
             font-size: 0.8em;
-            color: #04133b;
+            color: #fff;
             line-height: 1.5;
-            backdrop-filter: blur(2px);
-            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .info:hover {
+            transform: scale(1.03);
+            border-radius: 18px;
         }
 
         .stats-section {
@@ -179,6 +193,7 @@
             border-radius: 20px;
             padding: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #0ff7eb;
         }
 
         .stats-section h2 {
