@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portföyüm | [Adınız]</title>
+    <title>Abdulbaki BAYNAZ | Matematik Öğretmeni & Web Geliştirici</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
+            --primary: #0a0daa;
+            --primary-dark: #38ebf1;
             --secondary: #a78bfa;
-            --accent: #c084fc;
+            --accent: #f5f2f8;
             --text: #1e293b;
-            --text-light: #64748b;
+            --text-light: #3d82e9;
             --bg: #f8fafc;
             --card-bg: rgba(255, 255, 255, 0.65);
             --glass: rgba(255, 255, 255, 0.25);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient: linear-gradient(135deg, #09ebeb 20%, #8610fc 100%);
+            --gradient-alt: linear-gradient(135deg, #f093fb 0%, #69f02b 100%);
+            --gradient-green: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
-            --shadow-md: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-md: 0 10px 40px rgba(63, 12, 12, 0.12);
             --shadow-lg: 0 20px 60px rgba(99, 102, 241, 0.25);
         }
 
@@ -34,7 +36,7 @@
             overflow-x: hidden;
         }
 
-        /* Glassmorphism + Parallax Arka Plan */
+        /* Animasyonlu Arka Plan Parçacıkları */
         body::before {
             content: '';
             position: fixed;
@@ -44,11 +46,37 @@
             z-index: -2;
         }
 
-        /* Header */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Header - Sticky & Glassmorphism */
         header {
+            position: sticky;
+            top: 0;
             background: rgba(255,255,255,0.85); 
             backdrop-filter: blur(12px); 
             border-bottom: 1px solid rgba(255,255,255,0.4);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
         }
         nav {
             max-width: 1400px;
@@ -64,8 +92,11 @@
             background: var(--gradient); 
             -webkit-background-clip: text; 
             background-clip: text; 
-            color: transparent; 
+            color: transparent;
+            cursor: pointer;
+            transition: var(--transition);
         }
+        .logo:hover { transform: scale(1.05); }
         nav ul {
             display: flex;
             gap: 2.5rem;
@@ -113,6 +144,23 @@
             opacity: 0.9;
             z-index: -1;
         }
+        /* Animasyonlu Dalga Efekti */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23f8fafc" opacity="0.5"/></svg>') repeat-x;
+            background-size: 50% 100px;
+            animation: wave 15s linear infinite;
+        }
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .hero-content {
             max-width: 900px;
             padding: 2rem;
@@ -121,7 +169,13 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: var(--shadow-lg);
+            animation: fadeInUp 1s ease-out;
         }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .profile-photo {
             width: 200px;
             height: 200px;
@@ -131,8 +185,14 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             margin-bottom: 2rem;
             transition: var(--transition);
+            animation: photoFloat 3s ease-in-out infinite;
         }
-        .profile-photo:hover { transform: scale(1.08) rotate(4deg); }
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .profile-photo:hover { transform: scale(1.08) rotate(4deg); animation: none; }
+
         .hero h1 {
             font-size: 3.8rem;
             font-weight: 800;
@@ -140,11 +200,28 @@
             margin-bottom: 1rem;
             text-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .hero p {
+        .hero .subtitle {
             font-size: 1.4rem;
             color: #e0e7ff;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             font-weight: 400;
+        }
+        .hero .tags {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .tag {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         /* 3D Flip Buton */
@@ -161,6 +238,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            margin: 0 0.5rem;
         }
         .btn-3d:hover {
             transform: translateY(-8px) scale(1.05);
@@ -180,17 +258,34 @@
         .btn-3d:hover::before { left: 0; }
         .btn-3d:hover { color: white; }
 
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        .btn-secondary::before { background: white; }
+        .btn-secondary:hover { color: var(--primary-dark); }
+
         /* Bölümler */
-        .section-padding { padding: 100px 2rem; max-width: 1400px; margin: 0 auto; }
+        .section-padding { padding: 100px 2rem; max-width: 1400px; margin: 0 auto; position: relative; }
         .section-title {
             text-align: center;
             font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 4rem;
+            margin-bottom: 1rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Hakkımda */
@@ -205,6 +300,36 @@
             color: var(--text-light);
             margin-bottom: 1.5rem;
         }
+        .about-text strong { color: var(--primary); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
         .about-image {
             height: 500px;
             border: 1px solid rgba(99,102,241,0.2);
@@ -217,8 +342,21 @@
             color: white;
             box-shadow: var(--shadow-lg);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
-        .about-image:hover { transform: translateY(-15px); }
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .about-image:hover { transform: translateY(-15px) rotateY(5deg); }
 
         /* Yetenekler */
         .skills-grid {
@@ -235,6 +373,23 @@
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(255,255,255,0.6);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: var(--transition);
+            transform: rotate(45deg);
+        }
+        .skill-card:hover::before {
+            opacity: 0.1;
         }
         .skill-card:hover {
             transform: translateY(-15px);
@@ -247,8 +402,44 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            position: relative;
+            z-index: 1;
         }
-        .skill-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
+        .skill-card h3 { margin-bottom: 1rem; font-size: 1.4rem; position: relative; z-index: 1; }
+        .skill-card p { position: relative; z-index: 1; }
+
+        /* Teknolojiler Bölümü */
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+        .tech-badge {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .tech-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            background: white;
+        }
+        .tech-badge i {
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
         /* Projeler */
         .projects-grid {
@@ -264,13 +455,36 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
             border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
         .project-card:hover {
             transform: translateY(-20px);
             box-shadow: var(--shadow-lg);
         }
-        .project-card h3 {
+        .project-icon {
+            font-size: 3rem;
             padding: 2rem 2rem 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .project-card h3 {
+            padding: 0 2rem 1rem;
             font-size: 1.5rem;
         }
         .project-card p {
@@ -284,6 +498,10 @@
             color: var(--primary);
             font-weight: 600;
             text-decoration: none;
+            transition: var(--transition);
+        }
+        .project-card a:hover {
+            transform: translateX(5px);
         }
 
         /* İletişim */
@@ -323,6 +541,10 @@
             color: var(--primary);
             text-decoration: none;
             font-weight: 500;
+            transition: var(--transition);
+        }
+        .info-card a:hover {
+            color: var(--primary-dark);
         }
 
         footer {
@@ -331,6 +553,43 @@
             background: rgba(99,102,241,0.03);
             color: var(--text-light);
             font-size: 0.95rem;
+        }
+        footer i {
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            z-index: 999;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Scroll Animasyonu */
@@ -349,6 +608,7 @@
             .hero h1 { font-size: 3.2rem; }
             .about-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
             .about-image { height: 400px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -363,24 +623,34 @@
                 transform: translateY(-100%);
                 opacity: 0;
                 transition: all 0.4s ease;
+                box-shadow: var(--shadow-md);
             }
             nav ul.open {
                 transform: translateY(0);
                 opacity: 1;
             }
             .hero h1 { font-size: 2.6rem; }
-            .hero p { font-size: 1.2rem; }
+            .hero .subtitle { font-size: 1.1rem; }
             .profile-photo { width: 160px; height: 160px; }
             .section-title { font-size: 2.4rem; }
             .section-padding { padding: 60px 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .btn-3d { padding: 14px 30px; font-size: 1rem; margin: 0.5rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Animasyonlu Parçacıklar -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Scroll to Top Butonu -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <header>
         <nav>
-            <div class="logo">Portföy</div>
+            <div class="logo">AB</div>
             <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç/kapat">
                 <i class="fas fa-bars"></i>
             </button>
@@ -388,6 +658,7 @@
                 <li><a href="#ana">Ana Sayfa</a></li>
                 <li><a href="#hakkimda">Hakkımda</a></li>
                 <li><a href="#yetenekler">Yetenekler</a></li>
+                <li><a href="#teknolojiler">Teknolojiler</a></li>
                 <li><a href="#projeler">Projeler</a></li>
                 <li><a href="#iletisim">İletişim</a></li>
             </ul>
@@ -395,21 +666,49 @@
     </header>
 
     <section id="ana" class="hero">
-        <div class="hero-content fade-in">
-            <img src="ögrenci.jpg" alt="Profil Fotoğrafı" class="profile-photo">
-            <h1>Merhaba, Ben [Adınız]</h1>
-            <p>Modern Web Geliştirici & Yaratıcı Tasarımcı</p>
+        <div class="hero-content">
+            <img src="ögrenci.jpg" alt="Abdulbaki BAYNAZ" class="profile-photo">
+            <h1>Merhaba, Ben Abdulbaki BAYNAZ</h1>
+            <p class="subtitle">Matematik Öğretmeni | Veri Bilimci | Modern Web Geliştirici & Yaratıcı Tasarımcı</p>
+            <div class="tags">
+                <span class="tag"><i class="fas fa-graduation-cap"></i> Eğitim</span>
+                <span class="tag"><i class="fas fa-chart-line"></i> Veri Bilimi</span>
+                <span class="tag"><i class="fas fa-code"></i> Web Geliştirme</span>
+            </div>
             <a href="#projeler" class="btn-3d">Projelerimi İncele <i class="fas fa-arrow-right"></i></a>
+            <a href="#iletisim" class="btn-3d btn-secondary">İletişime Geç <i class="fas fa-envelope"></i></a>
         </div>
     </section>
 
     <section id="hakkimda" class="section-padding">
         <h2 class="section-title fade-in">Hakkımda</h2>
+        <p class="section-subtitle fade-in">Eğitim, teknoloji ve veri bilimi tutkusuyla hareket ediyorum</p>
         <div class="about-content">
             <div class="about-text fade-in">
-                <p>Merhaba! Ben <strong>[Adınız]</strong>. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum.</p>
-                <p>HTML5, CSS3, JavaScript (React, Vue), Tailwind, GSAP gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim.</p>
-                <p>Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak.</p>
+                <p>Merhaba! Ben <strong>Abdulbaki BAYNAZ</strong>. Öğrencilerime seviyelerine uygun matematik dersleri vererek onların akademik gelişimlerine katkı sağlıyorum. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum.</p>
+                
+                <p><strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong> gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim.</p>
+                
+                <p>Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak. Aynı zamanda öğrencilerimin matematik alanında kendilerini en iyi şekilde geliştirmelerine yardımcı olmak.</p>
+
+                <div class="stats-grid fade-in">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Yıllık Deneyim</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Mutlu Öğrenci</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Tamamlanan Proje</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Teknoloji</div>
+                    </div>
+                </div>
             </div>
             <div class="about-image fade-in">
                 <i class="fas fa-laptop-code"></i>
@@ -419,16 +718,27 @@
 
     <section id="yetenekler" class="section-padding" style="background: rgba(99,102,241,0.03);">
         <h2 class="section-title fade-in">Temel Yeteneklerim</h2>
+        <p class="section-subtitle fade-in">Çok yönlü becerilerle projelerinize değer katıyorum</p>
         <div class="skills-grid">
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>Matematik Eğitimi</h3>
+                <p>Öğrenci seviyesine uygun, anlaşılır ve etkili matematik öğretimi.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                <h3>Veri Bilimi & Analiz</h3>
+                <p>Python, Pandas, SQL ile veri analizi ve makine öğrenimi uygulamaları.</p>
+            </div>
             <div class="skill-card fade-in">
                 <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
                 <h3>UI/UX Tasarım</h3>
-                <p>Estetik, sezgisel ve kullanıcı dostu arayüzler.</p>
+                <p>Estetik, sezgisel ve kullanıcı dostu modern arayüzler.</p>
             </div>
             <div class="skill-card fade-in">
-                <div class="skill-icon"><i class="fab fa-html5"></i><i class="fab fa-css3-alt"></i><i class="fab fa-js-square"></i></div>
+                <div class="skill-icon"><i class="fab fa-react"></i></div>
                 <h3>Front-End Geliştirme</h3>
-                <p>Modern frameworkler ile güçlü ve ölçeklenebilir uygulamalar.</p>
+                <p>React, Vue.js ve modern frameworkler ile güçlü uygulamalar.</p>
             </div>
             <div class="skill-card fade-in">
                 <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
@@ -443,31 +753,74 @@
         </div>
     </section>
 
-    <section id="projeler" class="section-padding">
+    <section id="teknolojiler" class="section-padding">
+        <h2 class="section-title fade-in">Kullandığım Teknolojiler</h2>
+        <p class="section-subtitle fade-in">Modern ve güçlü araçlarla çalışıyorum</p>
+        <div class="tech-badges fade-in">
+            <div class="tech-badge"><i class="fab fa-python"></i> Python</div>
+            <div class="tech-badge"><i class="fas fa-database"></i> Pandas</div>
+            <div class="tech-badge"><i class="fas fa-chart-line"></i> Scikit-learn</div>
+            <div class="tech-badge"><i class="fas fa-chart-bar"></i> Matplotlib</div>
+            <div class="tech-badge"><i class="fas fa-brain"></i> TensorFlow</div>
+            <div class="tech-badge"><i class="fas fa-code"></i> NumPy</div>
+            <div class="tech-badge"><i class="fas fa-database"></i> SQL</div>
+            <div class="tech-badge"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3</div>
+            <div class="tech-badge"><i class="fab fa-js-square"></i> JavaScript</div>
+            <div class="tech-badge"><i class="fab fa-react"></i> React</div>
+            <div class="tech-badge"><i class="fab fa-vuejs"></i> Vue.js</div>
+            <div class="tech-badge"><i class="fas fa-wind"></i> Tailwind CSS</div>
+            <div class="tech-badge"><i class="fas fa-magic"></i> GSAP</div>
+        </div>
+    </section>
+
+    <section id="projeler" class="section-padding" style="background: rgba(99,102,241,0.03);">
         <h2 class="section-title fade-in">Öne Çıkan Projeler</h2>
+        <p class="section-subtitle fade-in">Gerçek dünya problemlerine çözümler üretiyorum</p>
         <div class="projects-grid">
             <div class="project-card fade-in">
-                <h3>Modern E-Ticaret Platformu</h3>
-                <p>React + Stripe entegrasyonu ile tam fonksiyonel, hızlı ve güvenli alışveriş deneyimi.</p>
+                <div class="project-icon"><i class="fas fa-brain"></i></div>
+                <h3>Makine Öğrenimi Modeli</h3>
+                <p>Python ve TensorFlow kullanarak tahmin modelleri geliştirme ve veri analizi.</p>
                 <a href="#">Detayları Gör →</a>
             </div>
             <div class="project-card fade-in">
-                <h3>Kurumsal Marka Sitesi</h3>
-                <p>Next.js ile geliştirilmiş, animasyonlu, SEO optimize kurumsal web sitesi.</p>
+                <div class="project-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Eğitim Platformu</h3>
+                <p>Öğrenciler için interaktif matematik öğrenme ve sınav hazırlık platformu.</p>
                 <a href="#">Detayları Gör →</a>
             </div>
             <div class="project-card fade-in">
+                <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+                <h3>Modern E-Ticaret</h3>
+                <p>React + Stripe entegrasyonu ile hızlı ve güvenli alışveriş deneyimi.</p>
+                <a href="#">Detayları Gör →</a>
+            </div>
+            <div class="project-card fade-in">
+                <div class="project-icon"><i class="fas fa-chart-pie"></i></div>
+                <h3>Veri Görselleştirme Dashboard</h3>
+                <p>Pandas ve Matplotlib ile interaktif veri analizi ve raporlama aracı.</p>
+                <a href="#">Detayları Gör →</a>
+            </div>
+            <div class="project-card fade-in">
+                <div class="project-icon"><i class="fas fa-building"></i></div>
+                <h3>Kurumsal Web Sitesi</h3>
+                <p>Next.js ile geliştirilmiş, animasyonlu, SEO optimize kurumsal platform.</p>
+                <a href="#">Detayları Gör →</a>
+            </div>
+            <div class="project-card fade-in">
+                <div class="project-icon"><i class="fas fa-blog"></i></div>
                 <h3>Kişisel Blog & CMS</h3>
-                <p>Headless CMS (Sanity) + Next.js ile yüksek performanslı blog platformu.</p>
+                <p>Headless CMS + Next.js ile yüksek performanslı blog platformu.</p>
                 <a href="#">Detayları Gör →</a>
             </div>
         </div>
     </section>
 
-    <section id="iletisim" class="section-padding" style="background: rgba(99,102,241,0.03);">
+    <section id="iletisim" class="section-padding">
         <h2 class="section-title fade-in">İletişim</h2>
         <p style="text-align:center; font-size:1.2rem; color:var(--text-light); max-width:700px; margin:0 auto 4rem;" class="fade-in">
-            Yeni projeleriniz için heyecanla bekliyorum! Bana aşağıdaki kanallardan ulaşabilirsiniz.
+            Yeni projeleriniz, matematik dersi veya veri bilimi danışmanlığı için heyecanla bekliyorum! Bana aşağıdaki kanallardan ulaşabilirsiniz.
         </p>
         <div class="contact-info-grid">
             <div class="info-card fade-in">
@@ -489,10 +842,24 @@
     </section>
 
     <footer>
-        <p>© 2025 [Adınız] • Kalp ile yapıldı <i class="fas fa-heart" style="color:#ff6b6b;"></i></p>
+        <p>© 2025 Abdulbaki BAYNAZ • Kalp ile yapıldı <i class="fas fa-heart" style="color:#ff6b6b;"></i></p>
     </footer>
 
     <script>
+        // Parçacık Animasyonu
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 60 + 20 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 15 + 15) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
         // Mobil menü
         const menuToggle = document.getElementById('menuToggle');
         const navList = document.getElementById('navList');
@@ -507,13 +874,38 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+                
                 if (navList.classList.contains('open')) {
                     navList.classList.remove('open');
                     menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
                 }
             });
+        });
+
+        // Scroll to Top Button
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Scroll animasyonu
