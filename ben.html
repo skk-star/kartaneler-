@@ -38,7 +38,6 @@
         }
 
         /* ------------------- Section Fade-in Animasyonu STİLLERİ ------------------- */
-        
         .content-hidden {
             opacity: 0;
             transform: translateY(30px);
@@ -59,7 +58,7 @@
         .project-card:nth-child(2).content-hidden { transition-delay: 0.25s; }
         .project-card:nth-child(3).content-hidden { transition-delay: 0.4s; }
 
-        /* ------------------- Yeni: Profil Fotoğrafı Stili ------------------- */
+        /* ------------------- Profil Fotoğrafı Stili ------------------- */
         .profile-photo {
             width: 180px; /* Fotoğraf boyutu */
             height: 180px;
@@ -84,9 +83,8 @@
                 transform: scale(1);
             }
         }
-        /* ------------------- Diğer CSS Kodları (Değişmedi) ------------------- */
+        /* ------------------- Diğer CSS Kodları ------------------- */
         
-        /* Header ve Navigasyon */
         header {
             background: rgba(255, 255, 255, 0.98);
             padding: 1rem 0;
@@ -155,7 +153,6 @@
             cursor: pointer;
         }
         
-        /* Genel Yapı ve Animasyonlar */
         .section-padding {
             padding: 7rem 2rem;
             max-width: 1300px;
@@ -273,11 +270,57 @@
             position: relative;
             overflow: hidden;
         }
-        /* ... Diğer Hero stilleri ... */
 
-        /* Medya Sorguları (Mobil Uyumluluk ve Navigasyon Animasyonu) */
+        .hero-content { z-index: 10; }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            animation: fadeInUp 1s ease 0.8s backwards; /* Fotoğraftan sonra başlasın */
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease 1s backwards;
+        }
+        
+        /* Hakkımda Bölümü - Diğer stiller (Kısaltıldı) */
+        .about { background: var(--light-bg); }
+        .about-content { display: flex; flex-wrap: wrap; gap: 4rem; align-items: center; }
+        .about-text { flex: 1 1 500px; }
+        .about-image {
+            flex: 1 1 400px; min-height: 300px; background: var(--gradient); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; font-size: 5rem;
+            color: var(--light-text); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden; transition: transform 0.5s;
+        }
+        
+        .about-image:hover { transform: scale(1.02); }
+
+        /* Medya Sorguları (Mobil Uyumluluk) */
+        @media (max-width: 1024px) {
+            .section-padding { padding: 5rem 1.5rem; }
+            .hero-content h1 { font-size: 3.5rem; }
+        }
+        
         @media (max-width: 768px) {
-            /* ... Diğer mobil stiller ... */
+            .menu-toggle { display: block; }
+            nav ul {
+                display: none;
+                flex-direction: column; position: absolute; top: 72px; left: 0; width: 100%;
+                background: white; box-shadow: 0 10px 10px rgba(0,0,0,0.1); padding: 1rem 0; border-top: 1px solid #eee;
+                opacity: 0; transform: translateY(-20px); transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            }
+            
+            nav ul.open { display: flex; opacity: 1; transform: translateY(0); }
+            nav ul li { text-align: center; margin: 0.5rem 0; }
+
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.2rem; }
+            
             .profile-photo {
                 width: 150px;
                 height: 150px;
@@ -309,7 +352,6 @@
             
             <h1>Merhaba, Ben **[Adınız]**</h1>
             <p>Tutkulu Web Geliştirici & Yaratıcı Tasarımcı</p>
-            
             <a href="#projeler" class="btn">
                 <div class="btn-content">
                     <span class="front">Projelerimi İncele <i class="fas fa-arrow-right"></i></span>
@@ -393,4 +435,73 @@
             <div class="info-card content-hidden" style="transition-delay: 0.2s;">
                 <i class="fab fa-linkedin"></i>
                 <h4>LinkedIn</h4>
-                <a href="
+                <a href="https://linkedin.com/in/profiliniz" target="_blank">linkedin.com/in/profiliniz</a>
+            </div>
+            <div class="info-card content-hidden" style="transition-delay: 0.4s;">
+                <i class="fas fa-phone"></i>
+                <h4>Telefon</h4>
+                <a href="tel:+905551234567">+90 (555) 123 45 67</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 [Adınız]. Tüm Hakları Saklıdır. | Kod ile Yapıldı <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
+    </footer>
+
+    <script>
+        // Mobil Menü Toggle Fonksiyonu
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const nav = document.getElementById('main-nav');
+            const icon = this.querySelector('i');
+
+            nav.classList.toggle('open');
+            if (nav.classList.contains('open')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // Anchor linklere yumuşak kaydırma ve menü kapatma
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                if (window.innerWidth <= 768) {
+                    document.getElementById('main-nav').classList.remove('open');
+                    document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
+                }
+            });
+        });
+        
+        // ***********************************************
+        // SCROLL GECİŞ ANİMASYONU (Intersection Observer)
+        // ***********************************************
+        
+        const contentElements = document.querySelectorAll('.content-hidden');
+
+        const observerOptions = {
+            root: null, // viewport'u kök olarak kullan
+            rootMargin: '0px',
+            threshold: 0.2 // İçeriğin %20'si göründüğünde tetikle
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-on-scroll');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        contentElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
