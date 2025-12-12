@@ -46,7 +46,10 @@
 
         /* Header */
         header {
-            { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.4); }
+            background: rgba(255,255,255,0.85); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+        }
         nav {
             max-width: 1400px;
             margin: 0 auto;
@@ -55,7 +58,14 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-size: 1.8rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: linear-gradient(135deg, #6366f1, #a78bfa); -webkit-background-clip: text; color: transparent; }
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            background: var(--gradient); 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            color: transparent; 
+        }
         nav ul {
             display: flex;
             gap: 2.5rem;
@@ -69,7 +79,15 @@
             transition: var(--transition);
         }
         nav a::after {
-            content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 3px; background: var(--gradient); transition: var(--transition); border-radius: 3px;
+            content: ''; 
+            position: absolute; 
+            bottom: -6px; 
+            left: 0; 
+            width: 0; 
+            height: 3px; 
+            background: var(--gradient); 
+            transition: var(--transition); 
+            border-radius: 3px;
         }
         nav a:hover { color: var(--primary); }
         nav a:hover::after { width: 100%; }
@@ -88,7 +106,9 @@
             overflow: hidden;
         }
         .hero::before {
-            content: ''; position: absolute; inset: 0;
+            content: ''; 
+            position: absolute; 
+            inset: 0;
             background: var(--gradient);
             opacity: 0.9;
             z-index: -1;
@@ -147,10 +167,17 @@
             box-shadow: var(--shadow-lg);
         }
         .btn-3d::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 0; height: 100%;
-            background: var(--gradient); transition: var(--transition); z-index: -1;
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 100%; 
+            height: 100%;
+            background: var(--gradient); 
+            transition: var(--transition); 
+            z-index: -1;
         }
-        .btn-3d:hover::before { width: 200%; left: -50%; }
+        .btn-3d:hover::before { left: 0; }
         .btn-3d:hover { color: white; }
 
         /* Bölümler */
@@ -180,7 +207,7 @@
         }
         .about-image {
             height: 500px;
-            border-radius: 1px solid rgba(99,102,241,0.2);
+            border: 1px solid rgba(99,102,241,0.2);
             border-radius: 24px;
             background: var(--gradient);
             display: flex;
@@ -218,6 +245,7 @@
             margin-bottom: 1.5rem;
             background: var(--gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
         }
         .skill-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
@@ -246,12 +274,12 @@
             font-size: 1.5rem;
         }
         .project-card p {
-            padding: 0 2rem;
+            padding: 0 2rem 1.5rem;
             color: var(--text-light);
         }
         .project-card a {
             display: block;
-            padding: 1.5rem 2rem;
+            padding: 0 2rem 2rem;
             text-align: right;
             color: var(--primary);
             font-weight: 600;
@@ -259,7 +287,6 @@
         }
 
         /* İletişim */
-        */
         .contact-info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -285,7 +312,12 @@
             margin-bottom: 1.5rem;
             background: var(--gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
+        }
+        .info-card h4 { 
+            margin-bottom: 1rem; 
+            font-size: 1.2rem; 
         }
         .info-card a {
             color: var(--primary);
@@ -315,7 +347,7 @@
         /* Mobil Uyum */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 3.2rem; }
-            .about-content { grid-template-columns: 1fr; text-align: center; }
+            .about-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
             .about-image { height: 400px; }
         }
 
@@ -330,8 +362,7 @@
                 padding: 2rem 0;
                 transform: translateY(-100%);
                 opacity: 0;
-                transition:root { --transition: all 0.4s ease; }
-                transition: var(--transition);
+                transition: all 0.4s ease;
             }
             nav ul.open {
                 transform: translateY(0);
@@ -341,6 +372,7 @@
             .hero p { font-size: 1.2rem; }
             .profile-photo { width: 160px; height: 160px; }
             .section-title { font-size: 2.4rem; }
+            .section-padding { padding: 60px 1rem; }
         }
     </style>
 </head>
@@ -388,10 +420,26 @@
     <section id="yetenekler" class="section-padding" style="background: rgba(99,102,241,0.03);">
         <h2 class="section-title fade-in">Temel Yeteneklerim</h2>
         <div class="skills-grid">
-            <div class="skill-card fade-in"><div class="skill-icon"><i class="fas fa-paint-brush"></i></div><h3>UI/UX Tasarım</h3><p>Estetik, sezgisel ve kullanıcı dostu arayüzler.</p></div>
-            <div class="skill-card fade-in"><div class="skill-icon"><i class="fab fa-html5"></i><i class="fab fa-css3-alt"></i><i class="fab fa-js-square"></i></div><h3>Front-End Geliştirme</h3><p>Modern frameworkler ile güçlü ve ölçeklenebilir uygulamalar.</p></div>
-            <div class="skill-card fade-in"><div class="skill-icon"><i class="fas fa-mobile-alt"></i></div><h3>Responsive Tasarım</h3><p>Her cihazda mükemmel görünüm ve performans.</p></div>
-            <div class="skill-card fade-in"><div class="skill-icon"><i class="fas fa-tachometer-alt"></i></div><h3>Performans & SEO</h3><p>Hızlı yüklenme, Core Web Vitals ve SEO dostu yapı.</p></div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>UI/UX Tasarım</h3>
+                <p>Estetik, sezgisel ve kullanıcı dostu arayüzler.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fab fa-html5"></i><i class="fab fa-css3-alt"></i><i class="fab fa-js-square"></i></div>
+                <h3>Front-End Geliştirme</h3>
+                <p>Modern frameworkler ile güçlü ve ölçeklenebilir uygulamalar.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Responsive Tasarım</h3>
+                <p>Her cihazda mükemmel görünüm ve performans.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <div class="skill-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h3>Performans & SEO</h3>
+                <p>Hızlı yüklenme, Core Web Vitals ve SEO dostu yapı.</p>
+            </div>
         </div>
     </section>
 
@@ -422,9 +470,21 @@
             Yeni projeleriniz için heyecanla bekliyorum! Bana aşağıdaki kanallardan ulaşabilirsiniz.
         </p>
         <div class="contact-info-grid">
-            <div class="info-card fade-in"><i class="fas fa-envelope"></i><h4>E-posta</h4><a href="mailto:ornek@eposta.com">ornek@eposta.com</a></div>
-            <div class="info-card fade-in"><i class="fab fa-linkedin"></i><h4>LinkedIn</h4><a href="https://linkedin.com/in/profil" target="_blank">linkedin.com/in/profil</a></div>
-            <div class="info-card fade-in"><i class="fab fa-github"></i><h4>GitHub</h4><a href="https://github.com/kullanici" target="_blank">github.com/kullanici</a></div>
+            <div class="info-card fade-in">
+                <i class="fas fa-envelope"></i>
+                <h4>E-posta</h4>
+                <a href="mailto:ornek@eposta.com">ornek@eposta.com</a>
+            </div>
+            <div class="info-card fade-in">
+                <i class="fab fa-linkedin"></i>
+                <h4>LinkedIn</h4>
+                <a href="https://linkedin.com/in/profil" target="_blank">linkedin.com/in/profil</a>
+            </div>
+            <div class="info-card fade-in">
+                <i class="fab fa-github"></i>
+                <h4>GitHub</h4>
+                <a href="https://github.com/kullanici" target="_blank">github.com/kullanici</a>
+            </div>
         </div>
     </section>
 
