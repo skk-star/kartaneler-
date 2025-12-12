@@ -2,225 +2,565 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kraliçe Anne'nin Danteli - Fraktal Simülatörü</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portföyüm | [Adınız]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: #fff; font-size: 16px; min-height: 100vh; padding: 10px; }
-        .container { max-width: 1400px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 350px 1fr; gap: 20px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(1.5px); border-radius: 20px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
-        .controls { display: flex; flex-direction: column; gap: 20px; }
-        h1 { font-size: 1.5em; background: linear-gradient(135deg, #a400ff, #fff, #ff0077); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-        .subtitle { font-size: 0.85em; color: #aaa; margin-bottom: 15px; }
-        .control-group { background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .control-group label { display: block; font-size: 0.9em; margin-bottom: 10px; color: #00bcd4; font-weight: 600; }
-        .slider-container { display: flex; align-items: center; gap: 12px; }
-        input[type="range"] { flex: 1; height: 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.1); outline: none; -webkit-appearance: none; touch-action: none; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #0ae2fa, #4bdb11, rgb(41, 24, 5)); cursor: pointer; box-shadow: 0 5px 8px rgba(116, 47, 15, 0.212); }
-        .value-display { min-width: 45px; text-align: center; font-weight: bold; font-size: 1em; color: #378f21; }
-        .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        button { padding: 14px 20px; background: linear-gradient(35deg, #ff66ff, #00ffff); color: #1a1a2e; border: solid 1px #00ffff; border-radius: 12px; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; touch-action: manipulation; }
-        button:hover { transform: scale(1.05); border-radius: 20px; }
-        .canvas-container { background: #000; border-radius: 15px; padding: 15px; display: flex; align-items: center; justify-content: center; min-height: 400px; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5); position: relative; }
-        canvas { max-width: 100%; height: auto; border-radius: 10px; display: block; }
-        .stats-section, .comments-section { max-width: 1400px; width: 100%; margin: 20px auto 0 auto; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(1px); border-radius: 20px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); border-left: 3px solid #ff00cc; }
-        .stats-section h2, .comments-section h2 { font-size: 1.3em; margin-bottom: 15px; color: #ff00cc; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .stat-card { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; text-align: center; }
-        .stat-value { font-size: 1.5em; font-weight: bold; color: #00ffff; }
-        .loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffd700; font-size: 1.2em; display: none; }
-        .loading.active { display: block; }
-        /* FastComments için yer tutucuyu gizlemiyoruz, varsayılan görünüm iyidir. */
-        #fastcomments-widget { min-height: 300px; } 
+        /* CSS Başlangıcı */
+        :root {
+            --primary-color: #7952b3;
+            --secondary-color: #6c5ce7;
+            --light-bg: #d7d6f5;
+            --dark-text: #333;
+            --light-text: #ffffff;
+            --gradient: linear-gradient(135deg, #2bf3f3 20%, #efeef5 45% ,#0c0cd8 50%);
+            --transition-speed: 0.7s;
+        }
 
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; 
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* ------------------- Section Fade-in Animasyonu STİLLERİ ------------------- */
+        
+        /* Tüm section içeriği için başlangıç durumu (Görünmez ve Hafif Aşağıda) */
+        .content-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        
+        /* İçerik Görünür Hale Geldiğinde (Scroll ile tetiklenir) */
+        .content-hidden.animate-on-scroll {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero bölümündeki elementler zaten animasyonlu olduğu için hariç tutulur */
+
+        /* Yetenek kartlarına gecikme ekleyelim */
+        .skill-card.content-hidden { transition-delay: 0.1s; }
+        .skill-card:nth-child(2).content-hidden { transition-delay: 0.25s; }
+        .skill-card:nth-child(3).content-hidden { transition-delay: 0.4s; }
+        .skill-card:nth-child(4).content-hidden { transition-delay: 0.55s; }
+
+        /* Proje kartlarına gecikme ekleyelim */
+        .project-card.content-hidden { transition-delay: 0.1s; }
+        .project-card:nth-child(2).content-hidden { transition-delay: 0.25s; }
+        .project-card:nth-child(3).content-hidden { transition-delay: 0.4s; }
+
+        /* ------------------- Diğer CSS Kodları (Değişmedi) ------------------- */
+        
+        /* Header ve Navigasyon */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 0;
+            position: sticky;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: background var(--transition-speed);
+        }
+
+        nav {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+            transition: transform var(--transition-speed) ease-in-out;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 600;
+            transition: color var(--transition-speed);
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: var(--secondary-color);
+            transition: width var(--transition-speed) ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+            left: 0;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        /* Genel Yapı ve Animasyonlar */
+        .section-padding {
+            padding: 7rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        /* Buton (3D Çevirme Efekti) */
+        .btn {
+            display: inline-block;
+            padding: 0;
+            background: none;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            width: 300px;
+            height: 60px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            box-shadow: 0 5px 15px rgba(12, 12, 216, 0.4);
+        }
+
+        .btn-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform var(--transition-speed);
+            transform-style: preserve-3d;
+        }
+
+        .btn .front, .btn .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .btn .front {
+            background: var(--gradient);
+            color: var(--light-text);
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .btn .back {
+            background: #0c0cd8;
+            color: #2bf3f3;
+            transform: rotateY(180deg);
+        }
+
+        .btn:hover .btn-content {
+            transform: rotateY(180deg);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(12, 12, 216, 0.6);
+        }
+
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Hero Bölümü */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-text);
+            padding: 2rem;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        .hero::before {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 5%;
+        }
+        
+        .hero::after {
+            width: 300px;
+            height: 300px;
+            bottom: 5%;
+            right: 10%;
+        }
+
+
+        .hero-content {
+            z-index: 10;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+        
+        /* Hakkımda Bölümü */
+        .about { background: var(--light-bg); }
+        .about-content { display: flex; flex-wrap: wrap; gap: 4rem; align-items: center; }
+        .about-text { flex: 1 1 500px; }
+        .about-text h2 { text-align: left; font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .about-image {
+            flex: 1 1 400px; min-height: 300px; background: var(--gradient); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; font-size: 5rem;
+            color: var(--light-text); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden; transition: transform 0.5s;
+        }
+        
+        .about-image:hover { transform: scale(1.02); }
+
+        /* Yetenekler Bölümü */
+        .skills { background: white; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .skill-card {
+            background: var(--light-bg); padding: 2.5rem; border-radius: 15px; text-align: center;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed);
+            border: 1px solid #eee;
+        }
+        .skill-card:hover {
+            transform: translateY(-12px); box-shadow: 0 20px 40px rgba(121, 82, 179, 0.15);
+            background: white; border-color: var(--secondary-color);
+        }
+        .skill-icon { font-size: 3.5rem; margin-bottom: 1rem; color: var(--primary-color); }
+        
+        /* Projeler Bölümü */
+        .projects { background: var(--light-bg); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .project-card {
+            background: var(--gradient); color: var(--light-text); padding: 3rem; border-radius: 15px;
+            transition: transform 0.4s, box-shadow 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .project-card:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .project-card h3 { margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700; }
+        .project-card a { color: white; text-decoration: underline; font-weight: 600; }
+
+        /* İletişim Bilgileri Bölümü */
+        .contact { background: white; text-align: center; }
+        .contact-info-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .info-card {
+            background: var(--light-bg); padding: 2rem; border-radius: 15px; border: 1px solid #eee;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .info-card i { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1rem; }
+        .info-card h4 { font-weight: 600; margin-bottom: 0.5rem; }
+        .info-card a { color: var(--dark-text); text-decoration: none; font-weight: 400; transition: color var(--transition-speed); }
+        .info-card a:hover { color: var(--primary-color); }
+
+        /* Footer */
+        footer { background: var(--dark-text); color: white; text-align: center; padding: 1.5rem; font-size: 0.9rem; }
+        
+        /* Medya Sorguları (Mobil Uyumluluk ve Navigasyon Animasyonu) */
+        @media (max-width: 1024px) {
+            .section-padding { padding: 5rem 1.5rem; }
+            .hero-content h1 { font-size: 3.5rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav ul {
+                display: none;
+                flex-direction: column; position: absolute; top: 72px; left: 0; width: 100%;
+                background: white; box-shadow: 0 10px 10px rgba(0,0,0,0.1); padding: 1rem 0; border-top: 1px solid #eee;
+                /* ANİMASYON İÇİN BAŞLANGIÇ DEĞERLERİ */
+                opacity: 0; transform: translateY(-20px); transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            }
+            
+            /* Menü Açıldığında */
+            nav ul.open { display: flex; opacity: 1; transform: translateY(0); }
+            nav ul li { text-align: center; margin: 0.5rem 0; }
+            nav a { padding: 0.5rem 0; display: block; }
+            nav a:hover:after { width: 50%; }
+
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.2rem; }
+            .about-content { gap: 2rem; }
+            .about-image { min-height: 250px; order: -1; }
+            .section-title { font-size: 2rem; margin-bottom: 3rem; }
+        }
+        
+        @media (max-width: 480px) {
+             .hero-content h1 { font-size: 2rem; }
+            .btn { width: 250px; height: 50px; }
+            .section-title { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="controls">
-            <h1>✨ Kraliçe Anne'nin Danteli</h1>
-            <div class="subtitle">Fraktal Geometri Simülatörü (Harici Yorum Sistemi)</div>
-            
-            <div class="control-group"><label>Tekrar Sayısı</label><div class="slider-container"><input type="range" id="repetitions" min="4" max="16" value="8" step="1"><span class="value-display" id="repetitionsValue">8</span></div></div>
-            <div class="control-group"><label>Derinlik (Katman)</label><div class="slider-container"><input type="range" id="depth" min="1" max="8" value="5" step="1"><span class="value-display" id="depthValue">5</span></div></div>
-            <div class="control-group"><label>Dal Uzunluğu</label><div class="slider-container"><input type="range" id="length" min="20" max="80" value="50" step="5"><span class="value-display" id="lengthValue">50</span></div></div>
-            <div class="control-group"><label>Dallanma Açısı</label><div class="slider-container"><input type="range" id="angle" min="15" max="75" value="45" step="5"><span class="value-display" id="angleValue">45°</span></div></div>
-            <div class="control-group"><label>Animasyon Hızı</label><div class="slider-container"><input type="range" id="speed" min="0" max="20" value="2" step="1"><span class="value-display" id="speedValue">2ms</span></div></div>
+    <header>
+        <nav>
+            <div class="logo">Portföy</div>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menü Aç/Kapat">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="main-nav">
+                <li><a href="#ana">Ana Sayfa</a></li>
+                <li><a href="#hakkimda">Hakkımda</a></li>
+                <li><a href="#yetenekler">Yetenekler</a></li>
+                <li><a href="#projeler">Projeler</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <div class="button-group">
-                <button onclick="drawFractal()">🎨 Çiz</button>
-                <button onclick="clearCanvas()">🗑️ Temizle</button>
+    <section id="ana" class="hero">
+        <div class="hero-content">
+            <h1>Merhaba, Ben **[Adınız]**</h1>
+            <p>Tutkulu Web Geliştirici & Yaratıcı Tasarımcı</p>
+            <a href="#projeler" class="btn">
+                <div class="btn-content">
+                    <span class="front">Projelerimi İncele <i class="fas fa-arrow-right"></i></span>
+                    <span class="back">Şimdi Başlayalım!</span> 
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="hakkimda" class="about section-padding">
+        <h2 class="section-title content-hidden">Hakkımda</h2>
+        <div class="about-content">
+            <div class="about-text content-hidden">
+                <p>Merhaba! Ben **[Adınız]**. Kullanıcı odaklı, estetik ve fonksiyonel web çözümleri geliştirmeye odaklanmış bir web geliştiriciyim.</p>
+                <p>Modern **HTML5, CSS3 ve JavaScript** teknolojilerinde derin bilgiye sahibim ve her projeye yenilikçi bir bakış açısı getiriyorum. Dijital dünyada sadece var olmak değil, aynı zamanda **iz bırakmak** için çalışıyorum.</p>
+                <p>Projelerimde mükemmeliyetçi bir yaklaşımla, hızlı yüklenen, erişilebilir ve mobil uyumlu deneyimler yaratmayı hedefliyorum.</p>
+            </div>
+            <div class="about-image content-hidden">
+                <i class="fas fa-code"></i>
             </div>
         </div>
+    </section>
 
-        <div class="canvas-container">
-            <div class="loading" id="loading">⏳ Çiziliyor...</div>
-            <canvas id="canvas" width="700" height="700"></canvas>
+    <section id="yetenekler" class="skills section-padding">
+        <h2 class="section-title content-hidden">Temel Yeteneklerim</h2>
+        <div class="skills-grid">
+            <div class="skill-card content-hidden">
+                <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>UI/UX Tasarım</h3>
+                <p>Kullanıcı yolculuğunu kolaylaştıran, estetik ve sezgisel arayüzler tasarlama.</p>
+            </div>
+            <div class="skill-card content-hidden">
+                <div class="skill-icon"><i class="fab fa-html5"></i> <i class="fab fa-css3-alt"></i> <i class="fab fa-js"></i></div>
+                <h3>Front-End Geliştirme</h3>
+                <p>Modern HTML, CSS (Sass/Tailwind) ve vanilla JavaScript ile güçlü kodlama.</p>
+            </div>
+            <div class="skill-card content-hidden">
+                <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Tam Mobil Uyum</h3>
+                <p>Tüm cihaz ve ekran boyutlarında kusursuz çalışan **(Responsive)** web siteleri.</p>
+            </div>
+            <div class="skill-card content-hidden">
+                <div class="skill-icon"><i class="fas fa-rocket"></i></div>
+                <h3>Web Performansı</h3>
+                <p>Hız, SEO ve erişilebilirlik (A11y) standartlarına uygun optimize edilmiş uygulamalar.</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="stats-section">
-        <h2>📊 Fraktal İstatistikleri</h2>
-        <div class="stats-grid">
-            <div class="stat-card"><div class="stat-icon">🌿</div><div class="stat-label">Toplam Dal</div><div class="stat-value" id="totalBranches">0</div></div>
-            <div class="stat-card"><div class="stat-icon">📏</div><div class="stat-label">Çizgi Sayısı</div><div class="stat-value" id="totalLines">0</div></div>
-            <div class="stat-card"><div class="stat-icon">⏱️</div><div class="stat-label">Süre</div><div class="stat-value" id="drawTime">0s</div></div>
-            <div class="stat-card"><div class="stat-icon">🎨</div><div class="stat-label">Geometri</div><div class="stat-value" id="geometry">8-gen</div></div>
+    <section id="projeler" class="projects section-padding">
+        <h2 class="section-title content-hidden">Öne Çıkan Projeler</h2>
+        <div class="projects-grid">
+            <div class="project-card content-hidden">
+                <h3>🛍️ Modern E-Ticaret Sitesi</h3>
+                <p>React/Vue tabanlı, hızlı ve güvenilir bir alışveriş deneyimi sunan tam fonksiyonel platform.</p>
+                <a href="#">Detayları Gör</a>
+            </div>
+            <div class="project-card content-hidden">
+                <h3>🏢 Kurumsal Marka Web Sitesi</h3>
+                <p>Markanın dijital kimliğini yansıtan, profesyonel, temiz ve SEO uyumlu kurumsal site.</p>
+                <a href="#">Detayları Gör</a>
+            </div>
+            <div class="project-card content-hidden">
+                <h3>✍️ Dinamik Blog Platformu</h3>
+                <p>Kullanıcı dostu CMS entegrasyonu ile zengin içeriklerin kolayca yönetildiği dinamik blog.</p>
+                <a href="#">Detayları Gör</a>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="comments-section">
-        <h2>💬 Yorumlar (FastComments)</h2>
-        <div id="fastcomments-widget"></div>
-    </div>
+    <section id="iletisim" class="contact section-padding">
+        <h2 class="section-title content-hidden">İletişim</h2>
+        <p style="margin-bottom: 3rem;" class="content-hidden">Projeleriniz hakkında konuşmak için bana aşağıdaki kanallardan ulaşabilirsiniz.</p>
+        
+        <div class="contact-info-grid">
+            <div class="info-card content-hidden">
+                <i class="fas fa-envelope"></i>
+                <h4>E-posta</h4>
+                <a href="mailto:örnek@epostaadresi.com">örnek@epostaadresi.com</a>
+            </div>
+            <div class="info-card content-hidden" style="transition-delay: 0.2s;">
+                <i class="fab fa-linkedin"></i>
+                <h4>LinkedIn</h4>
+                <a href="https://linkedin.com/in/profiliniz" target="_blank">linkedin.com/in/profiliniz</a>
+            </div>
+            <div class="info-card content-hidden" style="transition-delay: 0.4s;">
+                <i class="fas fa-phone"></i>
+                <h4>Telefon</h4>
+                <a href="tel:+905551234567">+90 (555) 123 45 67</a>
+            </div>
+        </div>
+    </section>
 
-    <script src="https://js.fastcomments.com/js/embed-v2.min.js"></script> 
+    <footer>
+        <p>&copy; 2024 [Adınız]. Tüm Hakları Saklıdır. | Kod ile Yapıldı <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
+    </footer>
+
     <script>
-        // FastComments Entegrasyonu
-        window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
-            // !!! BU ID'Yİ KENDİ TENANT ID'NİZLE DEĞİŞTİREBİLİRSİNİZ !!!
-            tenantId: 'demo-tenant', 
-            // URL ID'si, bu sayfadaki yorumları diğer sayfalardan ayırır.
-            urlId: 'kralice-anne-dantel-v2',
-            title: 'Kraliçe Anne\'nin Danteli - Fraktal Yorumları'
+        // Mobil Menü Toggle Fonksiyonu
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const nav = document.getElementById('main-nav');
+            const icon = this.querySelector('i');
+
+            nav.classList.toggle('open');
+            if (nav.classList.contains('open')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
         });
-    </script>
-    
-    <script>
-        // --- Fraktal Çizim Kodu ---
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const loading = document.getElementById('loading');
-        
-        function resizeCanvas() {
-            const container = canvas.parentElement;
-            const size = Math.min(container.clientWidth - 30, container.clientHeight - 30, 700);
-            canvas.width = size;
-            canvas.height = size;
-        }
-        
-        resizeCanvas();
-        window.addEventListener('resize', () => { if (!isDrawing) { resizeCanvas(); drawFractal(); } });
 
-        const centerX = () => canvas.width / 2;
-        const centerY = () => canvas.height / 2;
-
-        let drawingQueue = [];
-        let isDrawing = false;
-        let drawStartTime = 0;
-        let lineCount = 0;
-        let animationFrame = null;
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
-
-        document.querySelectorAll('input[type="range"]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const displayId = e.target.id + 'Value';
-                const unit = (e.target.id === 'angle' ? '°' : e.target.id === 'speed' ? (e.target.value === '0' ? 'Hızlı' : 'ms') : '');
-                document.getElementById(displayId).textContent = e.target.value + unit;
+        // Anchor linklere yumuşak kaydırma ve menü kapatma
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                if (window.innerWidth <= 768) {
+                    document.getElementById('main-nav').classList.remove('open');
+                    document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
+                }
             });
         });
+        
+        // ***********************************************
+        // SCROLL GECİŞ ANİMASYONU (Intersection Observer)
+        // ***********************************************
+        
+        const contentElements = document.querySelectorAll('.content-hidden');
 
-        function drawSinglePattern(x, y, angle, length, depth, branchAngle, color) {
-            if (depth === 0) return;
-            const endX = x + length * Math.cos(angle);
-            const endY = y + length * Math.sin(angle);
-            drawingQueue.push({ type: 'line', x1: x, y1: y, x2: endX, y2: endY, color: color });
-            lineCount++;
+        const observerOptions = {
+            root: null, // viewport'u kök olarak kullan
+            rootMargin: '0px',
+            threshold: 0.2 // İçeriğin %20'si göründüğünde tetikle
+        };
 
-            const newLength = length * 0.65;
-            drawSinglePattern(endX, endY, angle + branchAngle, newLength, depth - 1, branchAngle, color);
-            drawSinglePattern(endX, endY, angle - branchAngle, newLength, depth - 1, branchAngle, color);
-            if (depth > 1) {
-                drawSinglePattern(endX, endY, angle, newLength * 0.8, depth - 1, branchAngle, color);
-            }
-        }
-
-        function animateDraw() {
-            if (drawingQueue.length === 0) {
-                isDrawing = false;
-                loading.classList.remove('active');
-                updateStats();
-                return;
-            }
-
-            isDrawing = true;
-            const speed = parseInt(document.getElementById('speed').value);
-            
-            if (speed === 0) { 
-                while (drawingQueue.length > 0) {
-                    const item = drawingQueue.shift();
-                    if (item.type === 'line') {
-                        ctx.beginPath(); 
-                        ctx.strokeStyle = item.color;
-                        ctx.lineWidth = 1.5;
-                        ctx.moveTo(item.x1, item.y1);
-                        ctx.lineTo(item.x2, item.y2);
-                        ctx.stroke();
-                    }
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Element viewport'a girdi mi?
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-on-scroll');
+                    // Girdikten sonra gözlemlemeyi bırak (tekrar tekrar tetiklenmesin)
+                    observer.unobserve(entry.target);
                 }
-                animateDraw();
-            } else {
-                const batchSize = Math.max(1, Math.floor(50 / speed)); 
-                for (let i = 0; i < batchSize && drawingQueue.length > 0; i++) {
-                    const item = drawingQueue.shift();
-                    if (item.type === 'line') {
-                        ctx.beginPath();
-                        ctx.moveTo(item.x1, item.y1);
-                        ctx.lineTo(item.x2, item.y2);
-                        ctx.strokeStyle = item.color;
-                        ctx.lineWidth = 1.5;
-                        ctx.stroke();
-                    }
-                }
-                animationFrame = requestAnimationFrame(animateDraw);
-            }
-        }
+            });
+        }, observerOptions);
 
-        function updateStats() {
-            const repetitions = parseInt(document.getElementById('repetitions').value);
-            const depth = parseInt(document.getElementById('depth').value);
-            const drawTime = ((Date.now() - drawStartTime) / 1000).toFixed(2);
-            
-            const totalBranches = repetitions * (Math.pow(2, depth+1) - 1); 
-            const geometry = repetitions === 8 ? '8-gen' : repetitions + '-gen';
-            
-            document.getElementById('totalBranches').textContent = Math.round(totalBranches);
-            document.getElementById('totalLines').textContent = lineCount;
-            document.getElementById('drawTime').textContent = drawTime + 's';
-            document.getElementById('geometry').textContent = geometry;
-        }
-
-        function drawFractal() {
-            if (isDrawing) { if (animationFrame) cancelAnimationFrame(animationFrame); }
-            
-            loading.classList.add('active');
-            clearCanvas();
-            drawingQueue = [];
-            lineCount = 0;
-            drawStartTime = Date.now();
-
-            const repetitions = parseInt(document.getElementById('repetitions').value);
-            const depth = parseInt(document.getElementById('depth').value);
-            const length = parseInt(document.getElementById('length').value);
-            const branchAngle = parseInt(document.getElementById('angle').value) * Math.PI / 180;
-            const rotationAngle = (2 * Math.PI) / repetitions;
-
-            for (let i = 0; i < repetitions; i++) {
-                const angle = i * rotationAngle;
-                const color = colors[i % colors.length];
-                drawSinglePattern(centerX(), centerY(), angle - Math.PI / 2, length, depth, branchAngle, color);
-            }
-            setTimeout(() => animateDraw(), 10);
-        }
-
-        function clearCanvas() {
-            ctx.fillStyle = '#1a1a2e';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // Sayfa yüklendiğinde
-        clearCanvas();
-        drawFractal(); 
+        // Tüm gizli elementleri gözlemlemeye başla
+        contentElements.forEach(element => {
+            observer.observe(element);
+        });
     </script>
 </body>
 </html>
