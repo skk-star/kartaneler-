@@ -186,6 +186,19 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* Kontrol butonları container (mobil z-index için) */
+        .controls-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .controls-container {
+                position: relative;
+                z-index: 1001;
+            }
+        }
+
         /* Hero */
         .hero {
             min-height: 100vh;
@@ -205,7 +218,6 @@
             opacity: 0.9;
             z-index: -1;
         }
-        /* Animasyonlu Dalga Efekti */
         .hero::after {
             content: '';
             position: absolute;
@@ -266,23 +278,6 @@
             color: #e0e7ff;
             margin-bottom: 1rem;
             font-weight: 400;
-        }
-        .hero .tags {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
-        .tag {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.3);
         }
 
         /* 3D Flip Buton */
@@ -469,7 +464,7 @@
         .skill-card h3 { margin-bottom: 1rem; font-size: 1.4rem; position: relative; z-index: 1; }
         .skill-card p { position: relative; z-index: 1; }
 
-        /* Teknolojiler Bölümü */
+        /* Teknolojiler */
         .tech-badges {
             display: flex;
             flex-wrap: wrap;
@@ -681,10 +676,12 @@
                 backdrop-filter: blur(12px);
                 flex-direction: column;
                 padding: 2rem 0;
+                padding-top: 80px; /* Butonların altına gelsin */
                 transform: translateY(-100%);
                 opacity: 0;
                 transition: all 0.4s ease;
                 box-shadow: var(--shadow-md);
+                z-index: 999;
             }
             nav ul.open {
                 transform: translateY(0);
@@ -712,7 +709,7 @@
     <header>
         <nav>
             <div class="logo">AB</div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="controls-container">
                 <button class="theme-toggle" id="themeToggle" aria-label="Tema değiştir" title="Karanlık/Aydınlık Mod">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -739,35 +736,36 @@
             <img src="ögrenci.jpg" alt="Abdulbaki BAYNAZ" class="profile-photo">
             <h1 data-tr="Merhaba, Ben Abdulbaki BAYNAZ" data-en="Hello, I'm Abdulbaki BAYNAZ">Merhaba, Ben Abdulbaki BAYNAZ</h1>
             <p class="section-subtitle fade-in" data-tr="Eğitim, teknoloji ve veri bilimi tutkusuyla hareket ediyorum" data-en="Driven by passion for education, technology and data science">Eğitim, teknoloji ve veri bilimi tutkusuyla hareket ediyorum</p>
-        <div class="about-content">
-            <div class="about-text fade-in">
-                <p data-tr="Merhaba! Ben <strong>Abdulbaki BAYNAZ</strong>. Öğrencilerime seviyelerine uygun matematik dersleri vererek onların akademik gelişimlerine katkı sağlıyorum. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum." data-en="Hello! I'm <strong>Abdulbaki BAYNAZ</strong>. I contribute to my students' academic development by providing mathematics lessons appropriate to their level. I develop aesthetic and high-performance web applications that center user experience.">Merhaba! Ben <strong>Abdulbaki BAYNAZ</strong>. Öğrencilerime seviyelerine uygun matematik dersleri vererek onların akademik gelişimlerine katkı sağlıyorum. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum.</p>
-                
-                <p data-tr="<strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong> gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim." data-en="I work with modern technologies like <strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong>. Clean code, high performance and accessibility are my priorities in every project."><strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong> gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim.</p>
-                
-                <p data-tr="Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak. Aynı zamanda öğrencilerimin matematik alanında kendilerini en iyi şekilde geliştirmelerine yardımcı olmak." data-en="My goal is not just a website, but to create digital experiences that users enjoy using. Also to help my students develop themselves in the best way in the field of mathematics.">Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak. Aynı zamanda öğrencilerimin matematik alanında kendilerini en iyi şekilde geliştirmelerine yardımcı olmak.</p>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p data-tr="Merhaba! Ben <strong>Abdulbaki BAYNAZ</strong>. Öğrencilerime seviyelerine uygun matematik dersleri vererek onların akademik gelişimlerine katkı sağlıyorum. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum." data-en="Hello! I'm <strong>Abdulbaki BAYNAZ</strong>. I contribute to my students' academic development by providing mathematics lessons appropriate to their level. I develop aesthetic and high-performance web applications that center user experience.">Merhaba! Ben <strong>Abdulbaki BAYNAZ</strong>. Öğrencilerime seviyelerine uygun matematik dersleri vererek onların akademik gelişimlerine katkı sağlıyorum. Kullanıcı deneyimini merkeze alan, estetik ve performanslı web uygulamaları geliştiriyorum.</p>
+                    
+                    <p data-tr="<strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong> gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim." data-en="I work with modern technologies like <strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong>. Clean code, high performance and accessibility are my priorities in every project."><strong>Python</strong> (Pandas, Scikit-learn, Matplotlib, NumPy, TensorFlow), <strong>SQL</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>JavaScript</strong> (React, Vue), <strong>Tailwind CSS</strong>, <strong>GSAP</strong> gibi modern teknolojilerle çalışıyorum. Her projede temiz kod, yüksek performans ve erişilebilirlik benim önceliğim.</p>
+                    
+                    <p data-tr="Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak. Aynı zamanda öğrencilerimin matematik alanında kendilerini en iyi şekilde geliştirmelerine yardımcı olmak." data-en="My goal is not just a website, but to create digital experiences that users enjoy using. Also to help my students develop themselves in the best way in the field of mathematics.">Amacım sadece bir web sitesi değil, kullanıcıların keyifle kullandığı dijital deneyimler yaratmak. Aynı zamanda öğrencilerimin matematik alanında kendilerini en iyi şekilde geliştirmelerine yardımcı olmak.</p>
 
-                <div class="stats-grid fade-in">
-                    <div class="stat-item">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label" data-tr="Yıllık Deneyim" data-en="Years Experience">Yıllık Deneyim</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label" data-tr="Mutlu Öğrenci" data-en="Happy Students">Mutlu Öğrenci</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label" data-tr="Tamamlanan Proje" data-en="Completed Projects">Tamamlanan Proje</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label" data-tr="Teknoloji" data-en="Technologies">Teknoloji</div>
+                    <div class="stats-grid fade-in">
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label" data-tr="Yıllık Deneyim" data-en="Years Experience">Yıllık Deneyim</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label" data-tr="Mutlu Öğrenci" data-en="Happy Students">Mutlu Öğrenci</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label" data-tr="Tamamlanan Proje" data-en="Completed Projects">Tamamlanan Proje</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label" data-tr="Teknoloji" data-en="Technologies">Teknoloji</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="about-image fade-in">
-                <i class="fas fa-laptop-code"></i>
+                <div class="about-image fade-in">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
             </div>
         </div>
     </section>
@@ -899,8 +897,10 @@
 
     <footer>
         <p><span data-tr="© 2025 Abdulbaki BAYNAZ • Kalp ile yapıldı" data-en="© 2025 Abdulbaki BAYNAZ • Made with love">© 2025 Abdulbaki BAYNAZ • Kalp ile yapıldı</span> <i class="fas fa-heart" style="color:#ff6b6b;"></i></p>
-                    <a href="#projeler" class="btn-3d"><span data-tr="Projelerimi İncele" data-en="View My Projects">Projelerimi İncele</span> <i class="fas fa-arrow-right"></i></a>
+        <div style="margin-top: 2rem;">
+            <a href="#projeler" class="btn-3d"><span data-tr="Projelerimi İncele" data-en="View My Projects">Projelerimi İncele</span> <i class="fas fa-arrow-right"></i></a>
             <a href="#iletisim" class="btn-3d btn-secondary"><span data-tr="İletişime Geç" data-en="Get in Touch">İletişime Geç</span> <i class="fas fa-envelope"></i></a>
+        </div>
     </footer>
 
     <script>
@@ -979,7 +979,7 @@
 
         faders.forEach(fader => appearOnScroll.observe(fader));
 
-        // Tema Değiştirme (Dark/Light Mode)
+        // Tema Değiştirme
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const savedTheme = localStorage.getItem('theme') || 'light';
@@ -1002,7 +1002,7 @@
             }
         });
 
-        // Dil Değiştirme (TR/EN)
+        // Dil Değiştirme
         const langToggle = document.getElementById('langToggle');
         const langText = langToggle.querySelector('.lang-text');
         let currentLang = localStorage.getItem('language') || 'tr';
@@ -1035,8 +1035,3 @@
     </script>
 </body>
 </html>
- 
-    
-
-    
-     
